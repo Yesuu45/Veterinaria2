@@ -5,27 +5,20 @@ import co.edu.uniquindio.poo.veterinaria.controller.ClienteController;
 import co.edu.uniquindio.poo.veterinaria.model.Especie;
 import co.edu.uniquindio.poo.veterinaria.model.Mascota;
 import co.edu.uniquindio.poo.veterinaria.model.Propietario;
-import javafx.beans.Observable;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 
 public class ClienteViewController {
 
-    private App app;
     private ClienteController clienteController;
+    private App app;
+
     private ObservableList<Propietario> listaPropietarios = FXCollections.observableArrayList();
     private Propietario selectedPropietario;
-    private ObservableList<Mascota> listMascotas = FXCollections.observableArrayList();
-    private Mascota selectedMascota;
 
     @FXML
     private TableView<Propietario> tblListCliente;
@@ -40,7 +33,7 @@ public class ClienteViewController {
     private TextField txtNombreMascota;
 
     @FXML
-    private TableColumn<Mascota, String> ColNombreMascota;
+    private TableColumn<Propietario, String> ColNombreMascota;
 
     @FXML
     private ComboBox<Especie> selectedBoxEspecie;
@@ -64,7 +57,7 @@ public class ClienteViewController {
     private TextField txtNombre;
 
     @FXML
-    private TableColumn<Mascota, Especie> ColEspecie;
+    private TableColumn<Propietario, String> ColEspecie;
 
     @FXML
     private TextField txtTelefono;
@@ -76,7 +69,7 @@ public class ClienteViewController {
     private TableColumn<Propietario, String> ColGmail;
 
     @FXML
-    private TableColumn<Mascota, String> ColEdad;
+    private TableColumn<Propietario, String> ColEdad;
 
     @FXML
     private TableColumn<Propietario, String> ColNombrePropietario;
@@ -85,7 +78,16 @@ public class ClienteViewController {
     private TableColumn<Propietario, String> ColDireccion;
 
     @FXML
-    private TableColumn<Mascota, String> ColIdentificacion;
+    private TableColumn<Propietario, String> ColIdentificacion;
+
+    public void setApp(App app) {
+        this.app = app;
+    }
+
+    public void setClienteController(ClienteController clienteController) {
+        this.clienteController = clienteController;
+        initView();
+    }
 
     @FXML
     void crearPropietario(ActionEvent event) {
@@ -93,11 +95,15 @@ public class ClienteViewController {
     }
 
     private void initView() {
+        initComboBox();
         initDataBinding();
         obtenerPropietarios();
-        tblListCliente.getItems().clear();
         tblListCliente.setItems(listaPropietarios);
         listenerSelection();
+    }
+
+    private void initComboBox() {
+        selectedBoxEspecie.setItems(FXCollections.observableArrayList(Especie.values()));
     }
 
     private void initDataBinding() {
@@ -106,10 +112,34 @@ public class ClienteViewController {
         ColDireccion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDireccion()));
         ColTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
         ColGmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGmail()));
-        ColNombreMascota.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombreMascota()));
-        ColEspecie.setCellValueFactory(cellData -> new SimpleObjectProperty(cellData.getValue().getEspecie()));
-        ColEdad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getEdad())));
-        ColIdentificacion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIdVeterinaria()));
+
+        ColNombreMascota.setCellValueFactory(cellData -> {
+            if (!cellData.getValue().getMascotas().isEmpty()) {
+                return new SimpleStringProperty(cellData.getValue().getMascotas().get(0).getNombreMascota());
+            }
+            return new SimpleStringProperty("");
+        });
+
+        ColEspecie.setCellValueFactory(cellData -> {
+            if (!cellData.getValue().getMascotas().isEmpty()) {
+                return new SimpleStringProperty(cellData.getValue().getMascotas().get(0).getEspecie().toString());
+            }
+            return new SimpleStringProperty("");
+        });
+
+        ColEdad.setCellValueFactory(cellData -> {
+            if (!cellData.getValue().getMascotas().isEmpty()) {
+                return new SimpleStringProperty(String.valueOf(cellData.getValue().getMascotas().get(0).getEdad()));
+            }
+            return new SimpleStringProperty("");
+        });
+
+        ColIdentificacion.setCellValueFactory(cellData -> {
+            if (!cellData.getValue().getMascotas().isEmpty()) {
+                return new SimpleStringProperty(cellData.getValue().getMascotas().get(0).getIdVeterinaria());
+            }
+            return new SimpleStringProperty("");
+        });
     }
 
     private void obtenerPropietarios() {
@@ -128,14 +158,23 @@ public class ClienteViewController {
 
     private void agregarCliente() {
         Propietario propietario = buildPropietario();
-        if (clienteController.crearPropietario(propietario, selectedMascota)) {
+        Mascota mascota = buildMascota(propietario);
+        propietario.getMascotas().add(mascota);
+
+        if (clienteController.crearPropietario(propietario, mascota)) {
             listaPropietarios.add(propietario);
             limpiarCamposCliente();
         }
     }
 
     private Propietario buildPropietario() {
-        return new Propietario(txtNombre.getText(), txtCedula.getText(), txtDireccion.getText(), txtTelefono.getText(), txtGmail.getText());
+        return new Propietario(txtNombre.getText(), txtCedula.getText(), txtDireccion.getText(),
+                txtTelefono.getText(), txtGmail.getText());
+    }
+
+    private Mascota buildMascota(Propietario propietario) {
+        return new Mascota(txtNombreMascota.getText(), selectedBoxEspecie.getValue(), propietario,
+                Integer.parseInt(txtEdad.getText()), txtIdentificacion.getText());
     }
 
     private void limpiarCamposCliente() {
@@ -144,6 +183,10 @@ public class ClienteViewController {
         txtDireccion.clear();
         txtTelefono.clear();
         txtGmail.clear();
+        txtNombreMascota.clear();
+        txtEdad.clear();
+        txtIdentificacion.clear();
+        selectedBoxEspecie.getSelectionModel().clearSelection();
     }
 
     private void listenerSelection() {
@@ -151,8 +194,5 @@ public class ClienteViewController {
             selectedPropietario = newSelection;
             mostrarInformacionCliente(selectedPropietario);
         });
-    }
-    public void setApp(App app) {
-        this.app = app;
     }
 }
