@@ -12,6 +12,7 @@ public class Veterinaria {
     private String direccion;
     private String telefono;
     private String rut;
+    private LinkedList<Veterinario> veterinarios;
     private LinkedList<Propietario> propietarios;
     private LinkedList<Mascota> mascotas;
     private LinkedList<Cita> citas;
@@ -21,6 +22,7 @@ public class Veterinaria {
         this.direccion = direccion;
         this.telefono = telefono;
         this.rut = rut;
+        this.veterinarios = new LinkedList<>();
         this.propietarios = new LinkedList<>();
         this.mascotas = new LinkedList<>();
         this.citas = new LinkedList<>();
@@ -34,6 +36,25 @@ public class Veterinaria {
                 mascotas.add(mascota);
             }
             centinela = true;
+        }
+        return centinela;
+    }
+
+    public boolean agregarVeterianario(Veterinario veterinario) {
+        boolean centinela = false;
+        if (!verificarVeterinario(veterinario.getId())) {
+            veterinarios.add(veterinario);
+            centinela = true;
+        }
+        return centinela;
+    }
+
+    public boolean verificarVeterinario(String cedula) {
+        boolean centinela = false;
+        for (Veterinario veterinario : veterinarios) {
+            if (veterinario.getId().equals(cedula)) {
+                centinela = true;
+            }
         }
         return centinela;
     }

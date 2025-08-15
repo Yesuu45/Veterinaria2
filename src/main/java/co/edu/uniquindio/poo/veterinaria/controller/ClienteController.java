@@ -29,6 +29,4 @@ public class ClienteController {
         return veterinaria.getMascotas();
     }
 
-    public void setApp(App app) {
-    }
 }

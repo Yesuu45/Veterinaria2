@@ -18,6 +18,7 @@ public class ClienteViewController {
     private App app;
 
     private ObservableList<Propietario> listaPropietarios = FXCollections.observableArrayList();
+    private ObservableList<Mascota> listaMascotas = FXCollections.observableArrayList();
     private Propietario selectedPropietario;
 
     @FXML
@@ -99,6 +100,7 @@ public class ClienteViewController {
         initDataBinding();
         obtenerPropietarios();
         tblListCliente.setItems(listaPropietarios);
+        obtenerMascotas();
         listenerSelection();
     }
 
@@ -146,6 +148,10 @@ public class ClienteViewController {
         listaPropietarios.addAll(clienteController.obtenerPropietarios());
     }
 
+    private void obtenerMascotas(){
+        listaMascotas.addAll(clienteController.obtenerMascotas());
+    }
+
     private void mostrarInformacionCliente(Propietario propietario) {
         if (propietario != null) {
             txtNombre.setText(propietario.getNombre());
@@ -153,6 +159,15 @@ public class ClienteViewController {
             txtDireccion.setText(propietario.getDireccion());
             txtTelefono.setText(propietario.getTelefono());
             txtGmail.setText(propietario.getGmail());
+        }
+    }
+
+    private void mostrarInformacionMascota(Mascota mascota){
+        if(mascota != null){
+            txtNombreMascota.setText(mascota.getNombreMascota());
+            selectedBoxEspecie.getSelectionModel().select(mascota.getEspecie());
+            txtEdad.setText(String.valueOf(mascota.getEdad()));
+            txtIdentificacion.setText(mascota.getIdVeterinaria());
         }
     }
 
@@ -168,8 +183,12 @@ public class ClienteViewController {
     }
 
     private Propietario buildPropietario() {
-        return new Propietario(txtNombre.getText(), txtCedula.getText(), txtDireccion.getText(),
-                txtTelefono.getText(), txtGmail.getText());
+        return new Propietario(
+                txtNombre.getText(),
+                txtCedula.getText(),
+                txtDireccion.getText(),
+                txtTelefono.getText(),
+                txtGmail.getText());
     }
 
     private Mascota buildMascota(Propietario propietario) {
@@ -193,6 +212,7 @@ public class ClienteViewController {
         tblListCliente.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             selectedPropietario = newSelection;
             mostrarInformacionCliente(selectedPropietario);
+            mostrarInformacionMascota(selectedPropietario.getMascotas().get(0));
         });
     }
 }

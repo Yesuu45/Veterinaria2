@@ -1,8 +1,10 @@
 package co.edu.uniquindio.poo.veterinaria;
 
 import co.edu.uniquindio.poo.veterinaria.controller.ClienteController;
+import co.edu.uniquindio.poo.veterinaria.controller.VeterinarioController;
 import co.edu.uniquindio.poo.veterinaria.model.Veterinaria;
 import co.edu.uniquindio.poo.veterinaria.viewController.ClienteViewController;
+import co.edu.uniquindio.poo.veterinaria.viewController.VeterinarioViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +21,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Gestión de Clientes");
-        openViewPrincipal();
+        operViewCliente();
     }
 
     private void openViewPrincipal() {
@@ -31,6 +33,25 @@ public class App extends Application {
             ClienteViewController clienteViewController = loader.getController();
             clienteViewController.setApp(this);
             clienteViewController.setClienteController(new ClienteController(veterinaria));
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.err.println("Error al cargar la vista Cliente.fxml");
+            e.printStackTrace();
+        }
+    }
+
+    private void operViewCliente() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Veterinario.fxml"));
+            Parent rootLayout = loader.load(); // ✅ Ahora usamos Parent para evitar errores de casteo
+
+            // Obtiene el controlador de la vista
+            VeterinarioViewController veterinarioViewController = loader.getController();
+            veterinarioViewController.setApp(this);
+            veterinarioViewController.setVeterinarioController(new VeterinarioController(veterinaria));
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
