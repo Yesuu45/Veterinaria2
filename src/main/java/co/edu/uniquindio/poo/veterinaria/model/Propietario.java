@@ -14,9 +14,6 @@ public class Propietario extends Persona {
         this.mascotas = new LinkedList<>();
     }
 
-    public void agregarMascota(Mascota mascota) {
-        mascotas.add(mascota);
-    }
 
     @Override
     public String toString() {

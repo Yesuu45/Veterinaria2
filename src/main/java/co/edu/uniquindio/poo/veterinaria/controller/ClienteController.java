@@ -18,7 +18,7 @@ public class ClienteController {
 
     public boolean crearPropietario(Propietario propietario, Mascota mascota) {
 
-        return veterinaria.agregarCliente(propietario);
+        return veterinaria.agregarCliente(propietario );
     }
 
     public Collection<Propietario> obtenerPropietarios() {

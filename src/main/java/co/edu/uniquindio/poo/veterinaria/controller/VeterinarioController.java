@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.veterinaria.controller;
 
+import co.edu.uniquindio.poo.veterinaria.App;
 import co.edu.uniquindio.poo.veterinaria.model.Veterinaria;
 import co.edu.uniquindio.poo.veterinaria.model.Veterinario;
 
@@ -20,5 +21,6 @@ public class VeterinarioController {
     public Collection<Veterinario>ObtenerVeterinarios() {
         return veterinaria.getVeterinarios();
     }
+
 
 }

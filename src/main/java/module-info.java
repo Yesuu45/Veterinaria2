@@ -7,9 +7,11 @@ module co.edu.uniquindio.poo.veterinaria {
     requires javafx.graphics;
     requires java.sql;
 
+    // Abrimos el paquete principal a FXML y Graphics (para App)
+    opens co.edu.uniquindio.poo.veterinaria to javafx.fxml, javafx.graphics;
 
-
-    opens co.edu.uniquindio.poo.veterinaria to javafx.fxml;
+    // Abrimos el paquete de controladores FXML
     opens co.edu.uniquindio.poo.veterinaria.viewController to javafx.fxml;
-    exports co.edu.uniquindio.poo.veterinaria;
+
+    // Exportamos si otros módulos usan estas clases
 }

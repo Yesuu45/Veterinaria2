@@ -11,11 +11,20 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ClienteViewController {
 
     private ClienteController clienteController;
     private App app;
+
+    public ClienteViewController(ClienteController clienteController, App app) {
+        this.clienteController = clienteController;
+        this.app = app;
+    }
 
     private ObservableList<Propietario> listaPropietarios = FXCollections.observableArrayList();
     private ObservableList<Mascota> listaMascotas = FXCollections.observableArrayList();
@@ -81,9 +90,6 @@ public class ClienteViewController {
     @FXML
     private TableColumn<Propietario, String> ColIdentificacion;
 
-    public void setApp(App app) {
-        this.app = app;
-    }
 
     public void setClienteController(ClienteController clienteController) {
         this.clienteController = clienteController;

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane prefHeight="1127.0" prefWidth="1233.0" style="-fx-background-color: #F5FBFF;"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.ConsultaViewController">
+    <children>
+
+        <!-- Título principal -->
+        <Text fill="#2C5F2D" layoutX="350" layoutY="30" style="-fx-font-weight: bold;" text="📋 Gestión de Consultas">
+            <font>
+                <Font size="30" />
+            </font>
+        </Text>
+
+        <!-- Panel superior: Propietarios / Mascotas / Veterinarios / Personal -->
+        <VBox layoutX="20" layoutY="70" spacing="15">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <children>
+
+                <!-- Propietarios + Mascotas -->
+                <VBox prefHeight="202.0" prefWidth="1006.0" spacing="5">
+                    <padding>
+                        <Insets top="5" right="5" bottom="5" left="5"/>
+                    </padding>
+                    <children>
+                        <Text fill="#2C5F2D" style="-fx-font-weight: bold;" text="Propietarios y Mascotas">
+                            <font>
+                                <Font size="18" />
+                            </font>
+                        </Text>
+                        <TableView fx:id="tblPropietarios" prefHeight="181.0" prefWidth="1060.0" style="-fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colNombrePropietario" prefWidth="150" text="Nombre Propietario" />
+                                <TableColumn fx:id="colIdPropietario" prefWidth="100" text="Cédula" />
+                                <TableColumn fx:id="colTelefonoPropietario" prefWidth="100" text="Teléfono" />
+                                <TableColumn fx:id="colDireccionPropietario" prefWidth="150" text="Dirección" />
+                                <TableColumn fx:id="colGmailPropietario" prefWidth="150" text="Correo" />
+                                <TableColumn fx:id="colNombreMascota" prefWidth="120" text="Nombre Mascota" />
+                                <TableColumn fx:id="colEspecieMascota" prefWidth="100" text="Especie" />
+                                <TableColumn fx:id="colEdadMascota" prefWidth="70" text="Edad" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+
+                <!-- Veterinarios -->
+                <VBox spacing="5">
+                    <padding>
+                        <Insets top="5" right="5" bottom="5" left="5"/>
+                    </padding>
+                    <children>
+                        <Text fill="#2C5F2D" style="-fx-font-weight: bold;" text="Veterinarios">
+                            <font>
+                                <Font size="18" />
+                            </font>
+                        </Text>
+                        <TableView fx:id="tblVeterinarios" prefHeight="150" prefWidth="1160" style="-fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colNombreVet" prefWidth="120" text="Nombre" />
+                                <TableColumn fx:id="colIdVet" prefWidth="100" text="ID" />
+                                <TableColumn fx:id="colTelefonoVet" prefWidth="100" text="Teléfono" />
+                                <TableColumn fx:id="colDireccionVet" prefWidth="150" text="Dirección" />
+                                <TableColumn fx:id="colGmailVet" prefWidth="150" text="Correo" />
+                                <TableColumn fx:id="colLicenciaVet" prefWidth="100" text="Licencia" />
+                                <TableColumn fx:id="colEspecialidadVet" prefWidth="120" text="Especialidad" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+
+                <!-- Personal de Apoyo -->
+                <VBox spacing="5">
+                    <padding>
+                        <Insets top="5" right="5" bottom="5" left="5"/>
+                    </padding>
+                    <children>
+                        <Text fill="#2C5F2D" style="-fx-font-weight: bold;" text="Personal de Apoyo">
+                            <font>
+                                <Font size="18" />
+                            </font>
+                        </Text>
+                        <TableView fx:id="tblPersonalApoyo" prefHeight="120" prefWidth="1160" style="-fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colNombrePA" prefWidth="150" text="Nombre" />
+                                <TableColumn fx:id="colIdPA" prefWidth="100" text="ID" />
+                                <TableColumn fx:id="colTelefonoPA" prefWidth="100" text="Teléfono" />
+                                <TableColumn fx:id="colDireccionPA" prefWidth="150" text="Dirección" />
+                                <TableColumn fx:id="colGmailPA" prefWidth="150" text="Correo" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+
+                <!-- Citas activas -->
+                <VBox spacing="5">
+                    <padding>
+                        <Insets top="5" right="5" bottom="5" left="5"/>
+                    </padding>
+                    <children>
+                        <Text fill="#2C5F2D" style="-fx-font-weight: bold;" text="Citas Activas">
+                            <font>
+                                <Font size="18" />
+                            </font>
+                        </Text>
+                        <TableView fx:id="tblCitasActivas" prefHeight="150" prefWidth="1160" style="-fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colClienteActivo" prefWidth="150" text="Cliente" />
+                                <TableColumn fx:id="colMascotaActivo" prefWidth="120" text="Mascota" />
+                                <TableColumn fx:id="colEspecieActivo" prefWidth="100" text="Especie" />
+                                <TableColumn fx:id="colRazaActivo" prefWidth="120" text="Raza" />
+                                <TableColumn fx:id="colVeterinarioActivo" prefWidth="150" text="Veterinario" />
+                                <TableColumn fx:id="colTratamientoActivo" prefWidth="400" text="Tratamiento" />
+                                <TableColumn fx:id="colFechaActivo" prefWidth="120" text="Fecha" />
+                                <TableColumn fx:id="colEstadoActivo" prefWidth="100" text="Estado" />
+                            </columns>
+                        </TableView>
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <children>
+                                <Button fx:id="btnCitaTerminada" prefHeight="35" prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Cita Terminada" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- Historial de Citas -->
+                <VBox spacing="5">
+                    <padding>
+                        <Insets top="5" right="5" bottom="5" left="5"/>
+                    </padding>
+                    <children>
+                        <Text fill="#2C5F2D" style="-fx-font-weight: bold;" text="Historial de Citas Terminadas">
+                            <font>
+                                <Font size="18" />
+                            </font>
+                        </Text>
+                        <TableView fx:id="tblHistorialCitas" prefHeight="150" prefWidth="1160" style="-fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colClienteCita" prefWidth="150" text="Cliente" />
+                                <TableColumn fx:id="colMascotaCita" prefWidth="120" text="Mascota" />
+                                <TableColumn fx:id="colEspecieCita" prefWidth="100" text="Especie" />
+                                <TableColumn fx:id="colRazaCita" prefWidth="120" text="Raza" />
+                                <TableColumn fx:id="colVeterinarioCita" prefWidth="150" text="Veterinario" />
+                                <TableColumn fx:id="colTratamientoCita" prefWidth="400" text="Tratamiento" />
+                                <TableColumn fx:id="colFechaCita" prefWidth="120" text="Fecha" />
+                                <TableColumn fx:id="colEstadoCita" prefWidth="100" text="Estado" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+    </children>
+
+</AnchorPane>
