@@ -14,4 +14,10 @@ public class Veterinario extends Persona{
         this.numLicencia = numLicencia;
         this.especialidad = especialidad;
     }
+
+    @Override
+    public String toString() {
+        return getNombre() + " (" + especialidad + ", Licencia: " + numLicencia + ")";
+    }
+
 }

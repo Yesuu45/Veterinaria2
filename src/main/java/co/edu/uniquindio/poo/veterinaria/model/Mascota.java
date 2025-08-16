@@ -6,17 +6,25 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Mascota {
-    private String nombreMascota ;
+    private String nombreMascota;
     private Especie especie;
-    private Propietario propietario;
+    private String raza;             // <-- agregado
+    private Propietario propietario; // <-- obligatorio, siempre debe existir
     private int edad;
     private String idVeterinaria;
 
-    public Mascota(String nombreMascota, Especie especie, Propietario propietario, int edad, String idVeterinaria) {
+    public Mascota(String nombreMascota, Especie especie, String raza,
+                   Propietario propietario, int edad, String idVeterinaria) {
         this.nombreMascota = nombreMascota;
         this.especie = especie;
+        this.raza = raza;
         this.propietario = propietario;
         this.edad = edad;
         this.idVeterinaria = idVeterinaria;
+    }
+
+    @Override
+    public String toString() {
+        return nombreMascota + " (" + especie + ", " + raza + ") - Propietario: " + propietario.getNombre();
     }
 }

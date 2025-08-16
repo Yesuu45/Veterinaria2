@@ -109,7 +109,7 @@ public class App extends Application {
 
         // Crear mascotas del propietario
         Mascota mascota = new Mascota("mani",Especie.GATO,propietario , 2, "13131313");
-        Mascota mascota2 = new Mascota("Michi", Especie.GATO, propietario, 22,"35778575");
+        Mascota mascota2 = new Mascota("juan",Especie.PERRO, "siames","10214321",22,"3");
 
         // Agregar mascotas al propietario
         propietario.agregarMascota(mascota);
