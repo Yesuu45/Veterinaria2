@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<TabPane fx:id="maiTabPane"
+         fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PrimaryViewControler"
+         maxHeight="-Infinity" maxWidth="-Infinity"
+         minHeight="-Infinity" minWidth="-Infinity"
+         prefHeight="848.0" prefWidth="1426.0"
+         tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1">
+
+    <tabs>
+
+        <!-- Pestaña Clientes -->
+        <Tab fx:id="TabCliente" text="Clientes">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <fx:include fx:id="clientesInclude" source="Cliente.fxml"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+
+        <!-- Pestaña Veterinarios -->
+        <Tab fx:id="TabVeterinarios" text="Veterinarios">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <fx:include fx:id="veterinarioInclude" source="Veterinario.fxml"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+
+        <!-- Pestaña Personal de Apoyo -->
+        <Tab fx:id="TabPersonalApoo" text="Personal de Apoyo">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <fx:include fx:id="personalApoyoInclude" source="PersonalApoyo.fxml"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+
+        <!-- Pestaña Citas -->
+        <Tab fx:id="TabCitas" text="Citas">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <fx:include fx:id="citasInclude" source="Citas.fxml"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+
+        <!-- Pestaña Consultas -->
+        <Tab fx:id="TabConsulta" text="Consultas">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <fx:include fx:id="consultaInclude" source="Consulta.fxml"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+
+    </tabs>
+</TabPane>
