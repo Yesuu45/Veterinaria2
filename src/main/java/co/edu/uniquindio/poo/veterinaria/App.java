@@ -19,7 +19,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Gestión de Veterinaria");
-        openViewVeterinario();
+        openViewPropietario();
     }
 
     public void openViewVeterinario() {

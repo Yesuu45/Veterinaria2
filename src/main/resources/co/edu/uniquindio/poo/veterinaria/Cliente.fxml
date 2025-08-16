@@ -16,10 +16,26 @@
         <Pane layoutX="14.0" layoutY="5.0" prefHeight="807.0" prefWidth="998.0"
               style="-fx-background-color: #E6F3FF;">
             <children>
-                <!-- Botón Agregar -->
-                <Button fx:id="btbAgregarCliente" layoutX="448.0" layoutY="254.0" mnemonicParsing="false"
+                <!-- Botones -->
+                <Button fx:id="btbAgregarCliente" layoutX="400.0" layoutY="254.0" mnemonicParsing="false"
                         onAction="#crearPropietario" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
                         text="Agregar">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+
+                <Button fx:id="btnActualizarCliente" layoutX="500.0" layoutY="254.0" mnemonicParsing="false"
+                        onAction="#actualizarPropietario" style="-fx-background-color: #2196F3; -fx-text-fill: white;"
+                        text="Actualizar">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+
+                <Button fx:id="btnEliminarCliente" layoutX="610.0" layoutY="254.0" mnemonicParsing="false"
+                        onAction="#eliminarPropietario" style="-fx-background-color: #f44336; -fx-text-fill: white;"
+                        text="Eliminar">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>

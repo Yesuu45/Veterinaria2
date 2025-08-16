@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.veterinaria.viewController;
 
 import co.edu.uniquindio.poo.veterinaria.App;
 import co.edu.uniquindio.poo.veterinaria.controller.ClienteController;
+import co.edu.uniquindio.poo.veterinaria.controller.VeterinarioController;
 import co.edu.uniquindio.poo.veterinaria.model.Especie;
 import co.edu.uniquindio.poo.veterinaria.model.Mascota;
 import co.edu.uniquindio.poo.veterinaria.model.Propietario;
@@ -21,10 +22,7 @@ public class ClienteViewController {
     private ClienteController clienteController;
     private App app;
 
-    public ClienteViewController(ClienteController clienteController, App app) {
-        this.clienteController = clienteController;
-        this.app = app;
-    }
+
 
     private ObservableList<Propietario> listaPropietarios = FXCollections.observableArrayList();
     private ObservableList<Mascota> listaMascotas = FXCollections.observableArrayList();
@@ -91,14 +89,20 @@ public class ClienteViewController {
     private TableColumn<Propietario, String> ColIdentificacion;
 
 
-    public void setClienteController(ClienteController clienteController) {
-        this.clienteController = clienteController;
-        initView();
+    @FXML
+    void eliminarPropietario() {
+        eliminarCliente();
     }
 
     @FXML
-    void crearPropietario(ActionEvent event) {
-        agregarCliente();
+    void actualizarPropietario() {
+        actualizarCliente();
+    }
+
+    @FXML
+    void initialize(){
+        clienteController = new ClienteController(app.veterinaria);
+        initView();
     }
 
     private void initView() {
@@ -110,9 +114,6 @@ public class ClienteViewController {
         listenerSelection();
     }
 
-    private void initComboBox() {
-        selectedBoxEspecie.setItems(FXCollections.observableArrayList(Especie.values()));
-    }
 
     private void initDataBinding() {
         ColNombrePropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
@@ -177,15 +178,12 @@ public class ClienteViewController {
         }
     }
 
-    private void agregarCliente() {
-        Propietario propietario = buildPropietario();
-        Mascota mascota = buildMascota(propietario);
-        propietario.getMascotas().add(mascota);
-
-        if (clienteController.crearPropietario(propietario, mascota)) {
-            listaPropietarios.add(propietario);
-            limpiarCamposCliente();
-        }
+    private void listenerSelection() {
+        tblListCliente.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            selectedPropietario = newSelection;
+            mostrarInformacionCliente(selectedPropietario);
+            mostrarInformacionMascota(selectedPropietario.getMascotas().get(0));
+        });
     }
 
     private Propietario buildPropietario() {
@@ -198,8 +196,12 @@ public class ClienteViewController {
     }
 
     private Mascota buildMascota(Propietario propietario) {
-        return new Mascota(txtNombreMascota.getText(), selectedBoxEspecie.getValue(), propietario,
-                Integer.parseInt(txtEdad.getText()), txtIdentificacion.getText());
+        return new Mascota(
+                txtNombreMascota.getText(),
+                selectedBoxEspecie.getValue(),
+                propietario,
+                Integer.parseInt(txtEdad.getText()),
+                txtIdentificacion.getText());
     }
 
     private void limpiarCamposCliente() {
@@ -214,11 +216,69 @@ public class ClienteViewController {
         selectedBoxEspecie.getSelectionModel().clearSelection();
     }
 
-    private void listenerSelection() {
-        tblListCliente.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            selectedPropietario = newSelection;
-            mostrarInformacionCliente(selectedPropietario);
-            mostrarInformacionMascota(selectedPropietario.getMascotas().get(0));
-        });
+    private void limpiarSelection(){
+        tblListCliente.getSelectionModel().clearSelection();
+        limpiarCamposCliente();
     }
+
+
+
+    public void setClienteController(ClienteController clienteController) {
+        this.clienteController = clienteController;
+        initView();
+    }
+
+
+
+    @FXML
+    void crearPropietario(ActionEvent event) {
+        agregarCliente();
+    }
+
+
+
+    private void initComboBox() {
+        selectedBoxEspecie.setItems(FXCollections.observableArrayList(Especie.values()));
+    }
+
+
+
+
+
+    private void agregarCliente() {
+        Propietario propietario = buildPropietario();
+        Mascota mascota = buildMascota(propietario);
+        propietario.getMascotas().add(mascota);
+
+        if (clienteController.crearPropietario(propietario, mascota)) {
+            listaPropietarios.add(propietario);
+            limpiarCamposCliente();
+        }
+    }
+
+    private void eliminarCliente(){
+        if(clienteController.eliminarPropietario(txtCedula.getText())){
+            listaPropietarios.remove(selectedPropietario);
+            limpiarCamposCliente();
+
+        }
+    }
+
+    private void actualizarCliente(){
+        if(selectedPropietario != null && clienteController.actualiazarPropietario(selectedPropietario.getId(), buildPropietario())){
+            int index = listaPropietarios.indexOf(selectedPropietario);
+            if(index >=0) {
+                listaPropietarios.set(index, buildPropietario());
+            }
+            tblListCliente.refresh();
+            limpiarSelection();
+            limpiarCamposCliente();
+        }
+    }
+
+
+
+
+
+
 }

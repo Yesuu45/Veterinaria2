@@ -21,6 +21,14 @@ public class ClienteController {
         return veterinaria.agregarCliente(propietario );
     }
 
+    public boolean eliminarPropietario(String idPropietario){
+        return  veterinaria.eliminarPropietario(idPropietario);
+    }
+
+    public boolean actualiazarPropietario(String idPropietario, Propietario propietario){
+        return veterinaria.actualiazarPropietario(idPropietario, propietario);
+    }
+
     public Collection<Propietario> obtenerPropietarios() {
         return veterinaria.getPropietarios();
     }

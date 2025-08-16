@@ -22,6 +22,7 @@ public class VeterinarioViewController {
     private VeterinarioController veterinarioController;
     private App app;
 
+
     private ObservableList<Veterinario> listaVeterinarios = FXCollections.observableArrayList();
     private Veterinario selectedVeterinario;
 
@@ -172,12 +173,16 @@ public class VeterinarioViewController {
         CombEspecialidad.setItems(FXCollections.observableArrayList(Especialidad.values()));
     }
 
-    private void agregarPersonalApoyo() {
-        Veterinario veterinario = buildVeterinario();
-        if (veterinarioController.crearVeterinario(veterinario)) {
-            listaVeterinarios.add(veterinario);
-            limpiarCampos();
-            limpiarSelection();
+    private void agregarVeterinario() {
+        if (validarCampos()) {
+            Veterinario veterinario = buildVeterinario();
+            if (veterinarioController.crearVeterinario(veterinario)) {
+                listaVeterinarios.add(veterinario);
+                limpiarCampos();
+                limpiarSelection();
+            } else {
+                mostrarAlerta("Error", "Ya existe un veterinario con esta identificación");
+            }
         }
     }
 
@@ -202,25 +207,9 @@ public class VeterinarioViewController {
     }
 
 
-
-
-
-
-
-
-
-
     @FXML
     void agregarVeterinario(ActionEvent event) {
-        if (validarCampos()) {
-            Veterinario veterinario = buildVeterinario();
-            if (veterinarioController.crearVeterinario(veterinario)) {
-                listaVeterinarios.add(veterinario);
-                limpiarCampos();
-            } else {
-                mostrarAlerta("Error", "Ya existe un veterinario con esta identificación");
-            }
-        }
+        agregarVeterinario();
     }
 
     private boolean validarCampos() {
