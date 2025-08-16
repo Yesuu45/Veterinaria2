@@ -181,10 +181,23 @@ public class ClienteViewController {
     private void listenerSelection() {
         tblListCliente.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             selectedPropietario = newSelection;
-            mostrarInformacionCliente(selectedPropietario);
-            mostrarInformacionMascota(selectedPropietario.getMascotas().get(0));
+            if (selectedPropietario != null) {
+                mostrarInformacionCliente(selectedPropietario);
+                if (!selectedPropietario.getMascotas().isEmpty()) {
+                    mostrarInformacionMascota(selectedPropietario.getMascotas().get(0));
+                } else {
+                    // Limpia los campos de mascota si no tiene mascotas
+                    txtNombreMascota.clear();
+                    selectedBoxEspecie.getSelectionModel().clearSelection();
+                    txtEdad.clear();
+                    txtIdentificacion.clear();
+                }
+            } else {
+                limpiarCamposCliente();
+            }
         });
     }
+
 
     private Propietario buildPropietario() {
         return new Propietario(
@@ -221,12 +234,6 @@ public class ClienteViewController {
         limpiarCamposCliente();
     }
 
-
-
-    public void setClienteController(ClienteController clienteController) {
-        this.clienteController = clienteController;
-        initView();
-    }
 
 
 

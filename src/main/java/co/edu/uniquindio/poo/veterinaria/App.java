@@ -19,8 +19,31 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Gestión de Veterinaria");
-        openViewPropietario();
+        openViewPrincipal();
     }
+
+
+    public void openViewPrincipal() {
+        inicializarVeterinaria();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));
+            Parent root = loader.load();
+
+            PrimaryViewControler controller = loader.getController(); // ✔ Correcto
+            controller.setApp(this);
+
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Sistema Veterinaria");
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
     public void openViewVeterinario() {
         inicializarVeterinaria();
@@ -57,7 +80,7 @@ public class App extends Application {
     public void openViewCita() {
         inicializarVeterinaria();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Citas.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Citas.fxml"));
             Parent root = loader.load();
             CitaViewController controller = loader.getController();
             controller.setApp(this);
@@ -73,9 +96,26 @@ public class App extends Application {
     public void openViewPropietario() {
         inicializarVeterinaria();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Cliente.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Cliente.fxml"));
             Parent root = loader.load();
             ClienteViewController controller = loader.getController();
+            controller.setApp(this);
+
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void openViewConsulta() {
+        inicializarVeterinaria();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Consulta.fxml"));
+            Parent root = loader.load();
+            ConsultaViewController controller = loader.getController();
             controller.setApp(this);
 
             Scene scene = new Scene(root);
