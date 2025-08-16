@@ -2,28 +2,77 @@ package co.edu.uniquindio.poo.veterinaria.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 public class Cita {
 
-    private PersonalApoyo personalApoyo;
-    private Veterinario veterinario;
-    private Mascota mascota;
-    private LocalDateTime fecha;
     private String id;
-    private String observaciones;
+
+    @NonNull
+    private LocalDateTime fecha;
 
 
-    public Cita(Veterinario veterinario, PersonalApoyo personalApoyo, Mascota mascota, LocalDateTime fecha, String observaciones, String id) {
-        this.veterinario = veterinario;
-        this.personalApoyo = personalApoyo;
-        this.mascota = mascota;
-        this.fecha = fecha;
-        this.observaciones = observaciones;
+    private String descripcion;
+
+
+    private List<Propietario> propietarios;
+
+
+    private List<Mascota> mascotas;
+
+
+    private List<Veterinario> veterinarios;
+
+
+    private List<PersonalApoyo> personalApoyo;
+
+
+    // Constructor principal
+    public Cita(String id,
+                @NonNull LocalDateTime fecha,
+                String descripcion) {
         this.id = id;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.propietarios = new ArrayList<>();
+        this.mascotas = new ArrayList<>();
+        this.veterinarios = new ArrayList<>();
+        this.personalApoyo = new ArrayList<>();
+    }
+
+    // Métodos
+    public void agregarPropietario(Propietario propietario) {
+        propietarios.add(propietario);
+    }
+
+    public void agregarMascota(Mascota mascota) {
+        mascotas.add(mascota);
+    }
+
+    public void agregarVeterinario(Veterinario veterinario) {
+        veterinarios.add(veterinario);
+    }
+
+    public void agregarPersonalApoyo(PersonalApoyo personal) {
+        personalApoyo.add(personal);
+    }
+
+    @Override
+    public String toString() {
+        return "Cita{" +
+                "id='" + id + '\'' +
+                ", fecha=" + fecha +
+                ", descripcion='" + descripcion + '\'' +
+                ", propietarios=" + propietarios.size() +
+                ", mascotas=" + mascotas.size() +
+                ", veterinarios=" + veterinarios.size() +
+                ", personalApoyo=" + personalApoyo.size() +
+                '}';
     }
 }
