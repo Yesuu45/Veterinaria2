@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.veterinaria.viewController;
 import co.edu.uniquindio.poo.veterinaria.App;
 import co.edu.uniquindio.poo.veterinaria.controller.VeterinarioController;
 import co.edu.uniquindio.poo.veterinaria.model.Especialidad;
+import co.edu.uniquindio.poo.veterinaria.model.PersonalApoyo;
 import co.edu.uniquindio.poo.veterinaria.model.Veterinario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -10,6 +11,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 
 public class VeterinarioViewController {
 
@@ -67,12 +73,21 @@ public class VeterinarioViewController {
     @FXML
     private TableColumn<Veterinario, String> TabEspecialidad;
 
-    public void setApp(App app) {
-        this.app = app;
+
+    @FXML
+    void onEliminarVeterinario() {
+        eliminarVeterinario();
     }
 
-    public void setVeterinarioController(VeterinarioController veterinarioController) {
-        this.veterinarioController = veterinarioController;
+    @FXML
+    void onActualizarVeterinario() {
+        actualizarVeterinario();
+    }
+
+
+    @FXML
+    void initialize(){
+        veterinarioController = new VeterinarioController(app.veterinaria);
         initView();
     }
 
@@ -84,15 +99,6 @@ public class VeterinarioViewController {
         listenerSelection();
     }
 
-    private void initComboBox() {
-        CombEspecialidad.setItems(FXCollections.observableArrayList(Especialidad.values()));
-    }
-
-    private void obtenerVeterinarios() {
-        listaVeterinarios.clear();
-        listaVeterinarios.addAll(veterinarioController.ObtenerVeterinarios());
-    }
-
     private void initDataBinding() {
         TabNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         TabIdentificacion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
@@ -101,6 +107,10 @@ public class VeterinarioViewController {
         TabGmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGmail()));
         TabLicencia.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumLicencia()));
         TabEspecialidad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEspecialidad().toString()));
+    }
+
+    private void obtenerVeterinarios() {
+        listaVeterinarios.addAll(veterinarioController.ObtenerVeterinarios());
     }
 
     private void mostrarInformacionVeterinario(Veterinario veterinario) {
@@ -114,6 +124,7 @@ public class VeterinarioViewController {
             CombEspecialidad.getSelectionModel().select(veterinario.getEspecialidad());
         }
     }
+
 
     private void listenerSelection() {
         tblListVeterinario.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -133,6 +144,71 @@ public class VeterinarioViewController {
                 CombEspecialidad.getValue()
         );
     }
+
+    private void limpiarCampos() {
+        txtNombre.clear();
+        txtid.clear();
+        txtDireccion.clear();
+        txtTelefono.clear();
+        txtNumeroLicencia.clear();
+        txtGmail.clear();
+        CombEspecialidad.getSelectionModel().clearSelection();
+    }
+
+    private void limpiarSelection(){
+        tblListVeterinario.getSelectionModel().clearSelection();
+        limpiarCampos();
+    }
+
+
+
+
+    public void setVeterinarioController(VeterinarioController veterinarioController) {
+        this.veterinarioController = veterinarioController;
+        initView();
+    }
+
+    private void initComboBox() {
+        CombEspecialidad.setItems(FXCollections.observableArrayList(Especialidad.values()));
+    }
+
+    private void agregarPersonalApoyo() {
+        Veterinario veterinario = buildVeterinario();
+        if (veterinarioController.crearVeterinario(veterinario)) {
+            listaVeterinarios.add(veterinario);
+            limpiarCampos();
+            limpiarSelection();
+        }
+    }
+
+    private void eliminarVeterinario(){
+        if(veterinarioController.eliminarVeterinario(txtid.getText())){
+            listaVeterinarios.remove(selectedVeterinario);
+            limpiarCampos();
+
+        }
+    }
+
+    private void actualizarVeterinario(){
+        if(selectedVeterinario != null && veterinarioController.actualizarVeterinario(selectedVeterinario.getId(), buildVeterinario())){
+            int index = listaVeterinarios.indexOf(selectedVeterinario);
+            if(index >=0) {
+                listaVeterinarios.set(index, buildVeterinario());
+            }
+            tblListVeterinario.refresh();
+            limpiarSelection();
+            limpiarCampos();
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     @FXML
     void agregarVeterinario(ActionEvent event) {
@@ -166,13 +242,5 @@ public class VeterinarioViewController {
         alert.showAndWait();
     }
 
-    private void limpiarCampos() {
-        txtNombre.clear();
-        txtid.clear();
-        txtDireccion.clear();
-        txtTelefono.clear();
-        txtNumeroLicencia.clear();
-        txtGmail.clear();
-        CombEspecialidad.getSelectionModel().clearSelection();
-    }
+
 }

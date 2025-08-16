@@ -45,7 +45,7 @@ public class Veterinaria {
         return centinela;
     }
 
-    public boolean agregarVeterianario(Veterinario veterinario) {
+    public boolean agregarVeterinario(Veterinario veterinario) {
         boolean centinela = false;
         if (!verificarVeterinario(veterinario.getId())) {
             veterinarios.add(veterinario);

@@ -13,8 +13,17 @@ public class VeterinarioController {
     public VeterinarioController(Veterinaria veterinaria) {
         this.veterinaria = veterinaria;
     }
+
+    public  boolean eliminarVeterinario(String id){
+        return veterinaria.eliminarVeterinario(id);
+    }
+
+    public boolean actualizarVeterinario(String id, Veterinario veterinario){
+        return veterinaria.actualiazarVeterinario(id, veterinario);
+    }
+
     public boolean crearVeterinario(Veterinario veterinario){
-        return veterinaria.agregarVeterianario(veterinario);
+        return veterinaria.agregarVeterinario(veterinario);
 
     }
 

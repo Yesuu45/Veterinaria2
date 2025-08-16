@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.veterinaria;
 
-import co.edu.uniquindio.poo.veterinaria.model.Veterinaria;
+import co.edu.uniquindio.poo.veterinaria.model.*;
 import co.edu.uniquindio.poo.veterinaria.viewController.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +19,13 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Gestión de Veterinaria");
-        openViewPersonalApoyo();
+        openViewVeterinario();
     }
 
     public void openViewVeterinario() {
+        inicializarVeterinaria();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Veterinario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Veterinario.fxml"));
             Parent root = loader.load();
             VeterinarioViewController controller = loader.getController();
             controller.setApp(this);
@@ -38,6 +39,7 @@ public class App extends Application {
     }
 
     public void openViewPersonalApoyo() {
+        inicializarVeterinaria();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PersonalApoyo.fxml"));
             Parent root = loader.load();
@@ -53,6 +55,7 @@ public class App extends Application {
     }
 
     public void openViewCita() {
+        inicializarVeterinaria();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Citas.fxml"));
             Parent root = loader.load();
@@ -68,6 +71,7 @@ public class App extends Application {
     }
 
     public void openViewPropietario() {
+        inicializarVeterinaria();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Cliente.fxml"));
             Parent root = loader.load();
@@ -85,4 +89,34 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public void inicializarVeterinaria() {
+
+        // Crear personal de apoyo y veterinario
+        PersonalApoyo personalApoyo = new PersonalApoyo(
+                "Juan", "12345678", "Calle 123", "45678912", "Juan@gmail.com");
+        Veterinario veterinario = new Veterinario(
+                "Maicol", "1011201431", "cr 40 #42-16", "3238264868", "Maicol@gmail.com", "001", Especialidad.ACUATICOS);
+
+        // Agregar personal y veterinario a la veterinaria
+        veterinaria.agregarPersonalApoyo(personalApoyo);
+        veterinaria.agregarVeterinario(veterinario);
+
+        // Crear propietario
+        Propietario propietario = new Propietario(
+                "Yesuu", "10214321", "cr40#45#17", "21121212", "yesuaesteban@gmail.com"
+        );
+
+        // Crear mascotas del propietario
+        Mascota mascota = new Mascota("mani",Especie.GATO,propietario , 2, "13131313");
+        Mascota mascota2 = new Mascota("Michi", Especie.GATO, propietario, 22,"35778575");
+
+        // Agregar mascotas al propietario
+        propietario.agregarMascota(mascota);
+        propietario.agregarMascota(mascota2);
+
+        // Agregar propietario a la veterinaria 
+        veterinaria.agregarCliente(propietario);
+    }
+
 }

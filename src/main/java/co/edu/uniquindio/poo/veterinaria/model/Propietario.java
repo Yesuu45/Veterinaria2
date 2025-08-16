@@ -14,11 +14,19 @@ public class Propietario extends Persona {
         this.mascotas = new LinkedList<>();
     }
 
+    // Método para agregar una mascota al propietario
+    public void agregarMascota(Mascota mascota) {
+        if (mascota != null) {
+            mascotas.add(mascota);
+        }
+    }
 
     @Override
     public String toString() {
         return "Propietario{" +
-                "mascotas=" + mascotas +
+                "nombre=" + getNombre() +
+                ", id=" + getId() +
+                ", mascotas=" + mascotas +
                 '}';
     }
 }
