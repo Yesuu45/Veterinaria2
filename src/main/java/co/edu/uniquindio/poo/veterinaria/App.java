@@ -19,13 +19,12 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Gestión de Veterinaria");
-        openViewPropietario(); // Abre la vista inicial
+        openViewPersonalApoyo();
     }
 
     public void openViewVeterinario() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/co/edu/uniquindio/poo/veterinaria/Veterinario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Veterinario.fxml"));
             Parent root = loader.load();
             VeterinarioViewController controller = loader.getController();
             controller.setApp(this);
@@ -33,7 +32,6 @@ public class App extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,8 +39,7 @@ public class App extends Application {
 
     public void openViewPersonalApoyo() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/co/edu/uniquindio/poo/veterinaria/PersonalApoyo.fxml")); // CORRECTO
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PersonalApoyo.fxml"));
             Parent root = loader.load();
             PersonalApoyoViewController controller = loader.getController();
             controller.setApp(this);
@@ -50,17 +47,14 @@ public class App extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
     public void openViewCita() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/co/edu/uniquindio/poo/veterinaria/Citas.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Citas.fxml"));
             Parent root = loader.load();
             CitaViewController controller = loader.getController();
             controller.setApp(this);
@@ -68,7 +62,6 @@ public class App extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,8 +69,7 @@ public class App extends Application {
 
     public void openViewPropietario() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/co/edu/uniquindio/poo/veterinaria/Cliente.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinaria/Cliente.fxml"));
             Parent root = loader.load();
             ClienteViewController controller = loader.getController();
             controller.setApp(this);
@@ -85,7 +77,6 @@ public class App extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

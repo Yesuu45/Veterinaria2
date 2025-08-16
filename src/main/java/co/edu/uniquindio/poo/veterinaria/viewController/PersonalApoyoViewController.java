@@ -13,8 +13,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
+@Getter
+@Setter
 
 public class PersonalApoyoViewController {
     private App app;
@@ -59,10 +63,24 @@ public class PersonalApoyoViewController {
     @FXML
     private TextField txtGmail;
 
-    public void setPersonalApoyoController(PersonalApoyoController personalApoyoController) {
-        this.personalApoyoController = personalApoyoController;
+    @FXML
+    void onEliminar() {
+        eliminarPersonalApoyo();
+    }
+
+    @FXML
+    void onActualizar(){
+        actualizarPersonalApoyo();
+    }
+
+
+    @FXML
+    void initialize() {
+        personalApoyoController = new PersonalApoyoController(app.veterinaria);
         initView();
     }
+
+
 
     private void initView() {
         initDataBinding();
@@ -120,11 +138,37 @@ public class PersonalApoyoViewController {
         txtGmail.clear();
     }
 
+    private void limpiarSelection(){
+        tblPersonalApoyo.getSelectionModel().clearSelection();
+        limpiarCamposPersonalApoyo();
+    }
+
     private void agregarPersonalApoyo() {
         PersonalApoyo personalApoyo = buildPersonalApoyo();
         if (personalApoyoController.crearPersonalApoyo(personalApoyo)) {
             listaPersonalApoyo.add(personalApoyo);
             limpiarCamposPersonalApoyo();
+            limpiarSelection();
+        }
+    }
+
+    private void eliminarPersonalApoyo(){
+        if(personalApoyoController.eliminarPersonalApoyo(txtId.getText())){
+            listaPersonalApoyo.remove(selectedPersonalApoyo);
+            limpiarCamposPersonalApoyo();
+
+        }
+    }
+
+    private void actualizarPersonalApoyo(){
+        if(selectedPersonalApoyo != null && personalApoyoController.actualizarPersonalApoyo(selectedPersonalApoyo.getId(), buildPersonalApoyo())){
+            int index = listaPersonalApoyo.indexOf(selectedPersonalApoyo);
+            if(index >=0) {
+                listaPersonalApoyo.set(index, buildPersonalApoyo());
+            }
+            tblPersonalApoyo.refresh();
+            limpiarSelection();
+        limpiarCamposPersonalApoyo();
         }
     }
 

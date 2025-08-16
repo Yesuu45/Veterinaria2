@@ -6,49 +6,62 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PersonalApoyoViewController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PersonalApoyoViewController">
 
     <children>
         <Pane layoutY="-10.0" prefHeight="710.0" prefWidth="1249.0" style="-fx-background-color: #F5FBFF;">
             <children>
-                <!-- Título principal -->
-                <Text fill="#2C5F2D" layoutX="400.0" layoutY="50.0" style="-fx-font-weight: bold;" text="👥 Registro de Personal de Apoyo">
+                <Text fill="#2C5F2D" layoutX="400.0" layoutY="50.0"
+                      style="-fx-font-weight: bold;" text="👥 Registro de Personal de Apoyo">
                     <font>
-                        <Font size="30.0" />
+                        <Font size="30.0"/>
                     </font>
                 </Text>
 
-                <!-- Contenedor principal -->
                 <HBox layoutX="80.0" layoutY="80.0" spacing="30">
                     <children>
-                        <!-- Panel del formulario -->
-                        <VBox spacing="15" style="-fx-background-color: #FFFFFF; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, #999999, 10, 0, 4, 4);">
+                        <VBox spacing="15"
+                              style="-fx-background-color: #FFFFFF; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, #999999, 10, 0, 4, 4);">
                             <children>
                                 <Text fill="#2C5F2D" text="Datos del Personal de Apoyo">
                                     <font>
-                                        <Font size="20.0" />
+                                        <Font size="20.0"/>
                                     </font>
                                 </Text>
 
-                                <TextField fx:id="txtNombre" promptText="Nombre completo" style="-fx-background-radius: 10;" />
-                                <TextField fx:id="txtId" promptText="Identificación" style="-fx-background-radius: 10;" />
-                                <TextField fx:id="txtDireccion" promptText="Dirección" style="-fx-background-radius: 10;" />
-                                <TextField fx:id="txtTelefono" promptText="Teléfono" style="-fx-background-radius: 10;" />
-                                <TextField fx:id="txtGmail" promptText="Correo electrónico" style="-fx-background-radius: 10;" />
+                                <TextField fx:id="txtNombre" promptText="Nombre completo" style="-fx-background-radius: 10;"/>
+                                <TextField fx:id="txtId" promptText="Identificación" style="-fx-background-radius: 10;"/>
+                                <TextField fx:id="txtDireccion" promptText="Dirección" style="-fx-background-radius: 10;"/>
+                                <TextField fx:id="txtTelefono" promptText="Teléfono" style="-fx-background-radius: 10;"/>
+                                <TextField fx:id="txtGmail" promptText="Correo electrónico" style="-fx-background-radius: 10;"/>
 
-                                <Button fx:id="buttonAgregar" mnemonicParsing="false" onAction="#agregarPersonalApoyo" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10;" text="➕ Agregar Personal">
-                                </Button>
+                                <HBox spacing="10">
+                                    <children>
+                                        <Button fx:id="buttonAgregar" mnemonicParsing="false" onAction="#agregarPersonalApoyo"
+                                                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10;"
+                                                text="➕ Agregar"/>
+                                        <Button mnemonicParsing="false" onAction="#onEliminar"
+                                                style="-fx-background-color:#f44336; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius: 10; -fx-padding: 10;"
+                                                text="🗑 Eliminar"/>
+                                        <Button mnemonicParsing="false" onAction="#onActualizar"
+                                                style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius: 10; -fx-padding: 10;"
+                                                text="✏ Actualizar"/>
+                                    </children>
+                                </HBox>
                             </children>
                         </VBox>
 
-                        <!-- Tabla de personal de apoyo -->
-                        <TableView fx:id="tblPersonalApoyo" prefHeight="500.0" prefWidth="800.0" style="-fx-background-radius: 10; -fx-border-color: #CCCCCC; -fx-border-radius: 10;">
+                        <TableView fx:id="tblPersonalApoyo" prefHeight="500.0" prefWidth="800.0"
+                                   style="-fx-background-radius: 10; -fx-border-color: #CCCCCC; -fx-border-radius: 10;">
                             <columns>
-                                <TableColumn fx:id="colNombre" prefWidth="150.0" text="Nombre" />
-                                <TableColumn fx:id="colId" prefWidth="120.0" text="Identificación" />
-                                <TableColumn fx:id="colDireccion" prefWidth="200.0" text="Dirección" />
-                                <TableColumn fx:id="colTelefono" prefWidth="150.0" text="Teléfono" />
-                                <TableColumn fx:id="colGmail" prefWidth="180.0" text="Correo" />
+                                <TableColumn fx:id="colNombre" prefWidth="150.0" text="Nombre"/>
+                                <TableColumn fx:id="colId" prefWidth="120.0" text="Identificación"/>
+                                <TableColumn fx:id="colDireccion" prefWidth="200.0" text="Dirección"/>
+                                <TableColumn fx:id="colTelefono" prefWidth="150.0" text="Teléfono"/>
+                                <TableColumn fx:id="colGmail" prefWidth="180.0" text="Correo"/>
                             </columns>
                         </TableView>
                     </children>

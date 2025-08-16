@@ -117,4 +117,103 @@ public class Veterinaria {
 
 
     }
+
+
+    public boolean eliminarPropietario(String cedula) {
+        boolean centinela = false;
+        for (Propietario propietario : propietarios) {
+            if (propietario.getId().equals(cedula)) {
+                propietarios.remove(propietario);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean eliminarVeterinario(String cedula) {
+        boolean centinela = false;
+        for (Veterinario veterinario : veterinarios) {
+            if (veterinario.getId().equals(cedula)) {
+                veterinarios.remove(veterinario);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean eliminarPersonalApoyo(String cedula) {
+        boolean centinela = false;
+        for (PersonalApoyo personalApoyo : personalesApoyo) {
+            if (personalApoyo.getId().equals(cedula)) {
+                personalesApoyo.remove(personalApoyo);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean eliminarCita(String id) {
+        boolean centinela = false;
+        for (Cita cita : citas) {
+            if (cita.getId().equals(id)) {
+                citas.remove(cita);
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean actualiazarPersonalApoyo(String cedula, PersonalApoyo actualizado) {
+        boolean centinela = false;
+        for (PersonalApoyo personalApoyo : personalesApoyo) {
+            if (personalApoyo.getId().equals(cedula)) {
+                personalApoyo.setNombre(actualizado.getNombre());
+                personalApoyo.setDireccion(actualizado.getDireccion());
+                personalApoyo.setTelefono(actualizado.getTelefono());
+                personalApoyo.setGmail(actualizado.getGmail());
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public boolean actualiazarVeterinario(String cedula, Veterinario actualizado) {
+        boolean centinela = false;
+        for (Veterinario veterinario : veterinarios) {
+            if (veterinario.getId().equals(cedula)) {
+                veterinario.setNombre(actualizado.getNombre());
+                veterinario.setDireccion(actualizado.getDireccion());
+                veterinario.setTelefono(actualizado.getTelefono());
+                veterinario.setGmail(actualizado.getGmail());
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
+    public  boolean actualiazarPropietario(String cedula, Propietario actualizado) {
+        boolean centinela = false;
+        for (Propietario propietario : propietarios) {
+            if (propietario.getId().equals(cedula)) {
+                propietario.setNombre(actualizado.getNombre());
+                propietario.setDireccion(actualizado.getDireccion());
+                propietario.setTelefono(actualizado.getTelefono());
+                propietario.setGmail(actualizado.getGmail());
+                propietario.setMascotas(actualizado.getMascotas());
+                for (Mascota mascota : propietario.getMascotas()) {
+                    mascotas.add(mascota);
+                }
+                centinela = true;
+                break;
+            }
+        }
+        return centinela;
+    }
+
 }

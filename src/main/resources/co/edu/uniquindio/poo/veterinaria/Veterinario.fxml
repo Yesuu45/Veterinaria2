@@ -36,13 +36,21 @@
                                 <TextField fx:id="txtTelefono" promptText="Teléfono" style="-fx-background-radius: 10;"/>
                                 <TextField fx:id="txtNumeroLicencia" promptText="Número de licencia" style="-fx-background-radius: 10;"/>
                                 <TextField fx:id="txtGmail" promptText="Correo electrónico" style="-fx-background-radius: 10;"/>
-
                                 <ComboBox fx:id="CombEspecialidad" prefWidth="200.0" promptText="Especialidad" style="-fx-background-radius: 10;"/>
 
-                                <Button fx:id="buttonAgregar" text="➕ Agregar Veterinario" mnemonicParsing="false"
-                                        onAction="#agregarVeterinario"
-                                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10;">
-                                </Button>
+                                <!-- Botones -->
+                                <HBox spacing="10">
+                                    <children>
+                                        <Button fx:id="buttonAgregar" text="➕ Agregar Veterinario" mnemonicParsing="false"
+                                                onAction="#agregarVeterinario"
+                                                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10;">
+                                        </Button>
+                                        <Button mnemonicParsing="false" text="🗑 Eliminar" onAction="#onEliminarVeterinario"
+                                                style="-fx-background-color:#f44336; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius: 10; -fx-padding: 10;"/>
+                                        <Button mnemonicParsing="false" text="✏ Actualizar" onAction="#onActualizarVeterinario"
+                                                style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius: 10; -fx-padding: 10;"/>
+                                    </children>
+                                </HBox>
                             </children>
                         </VBox>
 

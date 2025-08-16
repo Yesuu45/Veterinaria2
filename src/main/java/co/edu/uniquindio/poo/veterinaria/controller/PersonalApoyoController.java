@@ -15,7 +15,19 @@ public class PersonalApoyoController {
         return veterinaria.agregarPersonalApoyo(personalApoyo);
     }
 
+    public boolean eliminarPersonalApoyo(String idPersonalApoyo){
+        return veterinaria.eliminarPersonalApoyo(idPersonalApoyo);
+    }
+
+    public boolean actualizarPersonalApoyo(String idPersonalApoyo, PersonalApoyo personalApoyo){
+        return veterinaria.actualiazarPersonalApoyo(idPersonalApoyo, personalApoyo);
+    }
+
+
+
     public Collection<PersonalApoyo> obtenerPersonalApoyo() {
         return veterinaria.getPersonalesApoyo();
     }
+
+
 }
