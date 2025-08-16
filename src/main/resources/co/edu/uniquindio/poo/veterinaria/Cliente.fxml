@@ -60,9 +60,10 @@
                     </font>
                 </Text>
                 <TextField fx:id="txtNombreMascota" layoutX="534.0" layoutY="83.0" promptText="Nombre"/>
-                <ComboBox fx:id="selectedBoxEspecie" layoutX="533.0" layoutY="117.0" prefWidth="150.0" promptText="Especie"/>
-                <TextField fx:id="txtEdad" layoutX="534.0" layoutY="149.0" promptText="Edad"/>
-                <TextField fx:id="txtIdentificacion" layoutX="534.0" layoutY="183.0" promptText="Identificacion"/>
+                <TextField fx:id="txtRaza" layoutX="534.0" layoutY="100.0" promptText="Raza"/> <!-- NUEVO -->
+                <ComboBox fx:id="selectedBoxEspecie" layoutX="533.0" layoutY="135.0" prefWidth="150.0" promptText="Especie"/>
+                <TextField fx:id="txtEdad" layoutX="534.0" layoutY="170.0" promptText="Edad"/>
+                <TextField fx:id="txtIdentificacion" layoutX="534.0" layoutY="205.0" promptText="Identificacion"/>
 
                 <!-- Tabla de Clientes y Mascotas -->
                 <TableView fx:id="tblListCliente" layoutX="52.0" layoutY="296.0" prefHeight="434.0" prefWidth="909.0">

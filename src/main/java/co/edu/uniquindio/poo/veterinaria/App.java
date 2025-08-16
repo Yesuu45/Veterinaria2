@@ -8,7 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class App extends Application {
 
@@ -29,7 +31,7 @@ public class App extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Principal.fxml"));
             Parent root = loader.load();
 
-            PrimaryViewControler controller = loader.getController(); // ✔ Correcto
+            PrincipalViewController controller = loader.getController(); // ✔ Correcto
             controller.setApp(this);
 
             Scene scene = new Scene(root);
@@ -126,19 +128,15 @@ public class App extends Application {
         }
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     public void inicializarVeterinaria() {
 
         // Crear personal de apoyo y veterinario
         PersonalApoyo personalApoyo = new PersonalApoyo(
                 "Juan", "12345678", "Calle 123", "45678912", "Juan@gmail.com");
         Veterinario veterinario = new Veterinario(
-                "Maicol", "1011201431", "cr 40 #42-16", "3238264868", "Maicol@gmail.com", "001", Especialidad.ACUATICOS);
+                "Maicol", "1011201431", "cr 40 #42-16", "3238264868",
+                "Maicol@gmail.com", "001", Especialidad.ACUATICOS);
 
-        // Agregar personal y veterinario a la veterinaria
         veterinaria.agregarPersonalApoyo(personalApoyo);
         veterinaria.agregarVeterinario(veterinario);
 
@@ -148,15 +146,30 @@ public class App extends Application {
         );
 
         // Crear mascotas del propietario
-        Mascota mascota = new Mascota("mani",Especie.GATO,propietario , 2, "13131313");
-        Mascota mascota2 = new Mascota("juan",Especie.PERRO, "siames","10214321",22,"3");
+        Mascota mascota1 = new Mascota("Mani", Especie.GATO, "Angora", propietario, 2, "13131313");
+        Mascota mascota2 = new Mascota("Juan", Especie.PERRO, "Siames", propietario, 3, "32323");
 
-        // Agregar mascotas al propietario
-        propietario.agregarMascota(mascota);
+        propietario.agregarMascota(mascota1);
         propietario.agregarMascota(mascota2);
 
-        // Agregar propietario a la veterinaria 
         veterinaria.agregarCliente(propietario);
+
+        // ✅ Crear cita
+        Cita cita = new Cita(
+                "CITA001",                          // ID de la cita
+                LocalDateTime.now().plusDays(1),    // Fecha: mañana
+                "Consulta de control para mascotas"
+        );
+
+        // Asociar participantes
+        cita.agregarPropietario(propietario);
+        cita.agregarMascota(mascota1);
+        cita.agregarMascota(mascota2);
+        cita.agregarVeterinario(veterinario);
+        cita.agregarPersonalApoyo(personalApoyo);
+
+        // Mostrar en consola como prueba
+        System.out.println(cita);
     }
 
 }

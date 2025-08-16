@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedList;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,6 +12,7 @@ public class Veterinaria {
     private String direccion;
     private String telefono;
     private String rut;
+
     private LinkedList<Veterinario> veterinarios;
     private LinkedList<PersonalApoyo> personalesApoyo;
     private LinkedList<Propietario> propietarios;
@@ -33,6 +33,32 @@ public class Veterinaria {
         this.consultas = new LinkedList<>();
     }
 
+    // ✅ Getters compatibles con los controladores
+    public LinkedList<Cita> getListaCitas() {
+        return citas;
+    }
+
+    public LinkedList<Propietario> getListaPropietarios() {
+        return propietarios;
+    }
+
+    public LinkedList<Veterinario> getListaVeterinarios() {
+        return veterinarios;
+    }
+
+    public LinkedList<PersonalApoyo> getListaPersonalApoyo() {
+        return personalesApoyo;
+    }
+
+    public LinkedList<Mascota> getListaMascotas() {
+        return mascotas;
+    }
+
+    public LinkedList<Consulta> getListaConsultas() {
+        return consultas;
+    }
+
+    // ✅ Agregar entidades
     public boolean agregarCliente(Propietario propietario) {
         boolean centinela = false;
         if (!verificarPropietarios(propietario.getId())) {
@@ -64,141 +90,96 @@ public class Veterinaria {
     }
 
     public boolean agregarCita(Cita cita) {
-
         boolean centinela = false;
         if (!verificarCita(cita.getId())) {
             citas.add(cita);
             centinela = true;
         }
-
         return centinela;
     }
 
-
+    // ✅ Verificaciones
     public boolean verificarVeterinario(String cedula) {
-        boolean centinela = false;
         for (Veterinario veterinario : veterinarios) {
             if (veterinario.getId().equals(cedula)) {
-                centinela = true;
+                return true;
             }
         }
-        return centinela;
+        return false;
     }
 
     public boolean verificarPersonalApoyo(String cedula) {
-        boolean centinela = false;
         for (PersonalApoyo personalApoyo : personalesApoyo) {
             if (personalApoyo.getId().equals(cedula)) {
-                centinela = true;
+                return true;
             }
         }
-        return centinela;
+        return false;
     }
 
     public boolean verificarPropietarios(String cedula) {
-        boolean centinela = false;
         for (Propietario propietario : propietarios) {
             if (propietario.getId().equals(cedula)) {
-                centinela = true;
+                return true;
             }
         }
-        return centinela;
+        return false;
     }
-
 
     public boolean verificarCita(String id) {
-        boolean centinela = false;
         for (Cita cita : citas) {
             if (cita.getId().equals(id)) {
-                centinela = true;
+                return true;
             }
         }
-        return centinela;
-
-
+        return false;
     }
 
-
+    // ✅ Eliminaciones
     public boolean eliminarPropietario(String cedula) {
-        boolean centinela = false;
-        for (Propietario propietario : propietarios) {
-            if (propietario.getId().equals(cedula)) {
-                propietarios.remove(propietario);
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
+        return propietarios.removeIf(propietario -> propietario.getId().equals(cedula));
     }
 
     public boolean eliminarVeterinario(String cedula) {
-        boolean centinela = false;
-        for (Veterinario veterinario : veterinarios) {
-            if (veterinario.getId().equals(cedula)) {
-                veterinarios.remove(veterinario);
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
+        return veterinarios.removeIf(veterinario -> veterinario.getId().equals(cedula));
     }
 
     public boolean eliminarPersonalApoyo(String cedula) {
-        boolean centinela = false;
-        for (PersonalApoyo personalApoyo : personalesApoyo) {
-            if (personalApoyo.getId().equals(cedula)) {
-                personalesApoyo.remove(personalApoyo);
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
+        return personalesApoyo.removeIf(personalApoyo -> personalApoyo.getId().equals(cedula));
     }
 
     public boolean eliminarCita(String id) {
-        boolean centinela = false;
-        for (Cita cita : citas) {
-            if (cita.getId().equals(id)) {
-                citas.remove(cita);
-                centinela = true;
-                break;
-            }
-        }
-        return centinela;
+        return citas.removeIf(cita -> cita.getId().equals(id));
     }
 
+    // ✅ Actualizaciones
     public boolean actualiazarPersonalApoyo(String cedula, PersonalApoyo actualizado) {
-        boolean centinela = false;
         for (PersonalApoyo personalApoyo : personalesApoyo) {
             if (personalApoyo.getId().equals(cedula)) {
                 personalApoyo.setNombre(actualizado.getNombre());
                 personalApoyo.setDireccion(actualizado.getDireccion());
                 personalApoyo.setTelefono(actualizado.getTelefono());
                 personalApoyo.setGmail(actualizado.getGmail());
-                centinela = true;
-                break;
+                return true;
             }
         }
-        return centinela;
+        return false;
     }
 
     public boolean actualiazarVeterinario(String cedula, Veterinario actualizado) {
-        boolean centinela = false;
         for (Veterinario veterinario : veterinarios) {
             if (veterinario.getId().equals(cedula)) {
                 veterinario.setNombre(actualizado.getNombre());
                 veterinario.setDireccion(actualizado.getDireccion());
                 veterinario.setTelefono(actualizado.getTelefono());
                 veterinario.setGmail(actualizado.getGmail());
-                centinela = true;
-                break;
+                return true;
             }
         }
-        return centinela;
+        return false;
     }
 
-    public  boolean actualiazarPropietario(String cedula, Propietario actualizado) {
-        boolean centinela = false;
+    public boolean actualiazarPropietario(String cedula, Propietario actualizado) {
         for (Propietario propietario : propietarios) {
             if (propietario.getId().equals(cedula)) {
                 propietario.setNombre(actualizado.getNombre());
@@ -207,13 +188,13 @@ public class Veterinaria {
                 propietario.setGmail(actualizado.getGmail());
                 propietario.setMascotas(actualizado.getMascotas());
                 for (Mascota mascota : propietario.getMascotas()) {
-                    mascotas.add(mascota);
+                    if (!mascotas.contains(mascota)) {
+                        mascotas.add(mascota);
+                    }
                 }
-                centinela = true;
-                break;
+                return true;
             }
         }
-        return centinela;
+        return false;
     }
-
 }

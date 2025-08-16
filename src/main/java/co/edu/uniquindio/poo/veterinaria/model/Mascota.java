@@ -8,8 +8,8 @@ import lombok.Setter;
 public class Mascota {
     private String nombreMascota;
     private Especie especie;
-    private String raza;             // <-- agregado
-    private Propietario propietario; // <-- obligatorio, siempre debe existir
+    private String raza;
+    private Propietario propietario;
     private int edad;
     private String idVeterinaria;
 
@@ -25,6 +25,6 @@ public class Mascota {
 
     @Override
     public String toString() {
-        return nombreMascota + " (" + especie + ", " + raza + ") - Propietario: " + propietario.getNombre();
+        return nombreMascota + " (" + especie + ", " + raza + ")";
     }
 }

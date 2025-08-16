@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 
 <TabPane fx:id="maiTabPane"
-         fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PrimaryViewControler"
+         fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PrincipalViewController"
          maxHeight="-Infinity" maxWidth="-Infinity"
          minHeight="-Infinity" minWidth="-Infinity"
          prefHeight="848.0" prefWidth="1426.0"

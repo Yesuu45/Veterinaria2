@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PrimaryViewControler {
+public class PrincipalViewController {
 
     private App app;
 

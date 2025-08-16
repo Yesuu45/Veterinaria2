@@ -1,291 +1,195 @@
 package co.edu.uniquindio.poo.veterinaria.viewController;
 
-import co.edu.uniquindio.poo.veterinaria.App;
-import co.edu.uniquindio.poo.veterinaria.controller.ClienteController;
-import co.edu.uniquindio.poo.veterinaria.controller.VeterinarioController;
-import co.edu.uniquindio.poo.veterinaria.model.Especie;
-import co.edu.uniquindio.poo.veterinaria.model.Mascota;
-import co.edu.uniquindio.poo.veterinaria.model.Propietario;
+import co.edu.uniquindio.poo.veterinaria.controller.CitaController;
+import co.edu.uniquindio.poo.veterinaria.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.event.ActionEvent;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class ClienteViewController {
+import java.time.LocalDate;
 
-    private ClienteController clienteController;
-    private App app;
-
-
-
-    private ObservableList<Propietario> listaPropietarios = FXCollections.observableArrayList();
-    private ObservableList<Mascota> listaMascotas = FXCollections.observableArrayList();
-    private Propietario selectedPropietario;
+public class CitaViewController {
 
     @FXML
-    private TableView<Propietario> tblListCliente;
+    private TextField txtIdCita;
 
     @FXML
-    private TableColumn<Propietario, String> ColTelefono;
+    private DatePicker LocalDateFecha;
 
     @FXML
-    private TextField txtDireccion;
+    private TextArea txtObservacione;
 
     @FXML
-    private TextField txtNombreMascota;
+    private ComboBox<Propietario> ComPropietario;
 
     @FXML
-    private TableColumn<Propietario, String> ColNombreMascota;
+    private ComboBox<Mascota> ComMascota;
 
     @FXML
-    private ComboBox<Especie> selectedBoxEspecie;
+    private ComboBox<Veterinario> ComVeterinario;
 
     @FXML
-    private TextField txtEdad;
+    private ComboBox<PersonalApoyo> ComPersonalApoyo;
 
     @FXML
-    private Button btbAgregarCliente;
+    private TableView<Cita> tblCitas;
 
     @FXML
-    private TextField txtCedula;
+    private TableColumn<Cita, String> ColdIdentificacion;
 
     @FXML
-    private TextField txtIdentificacion;
+    private TableColumn<Cita, String> ColdPropietarios;
 
     @FXML
-    private TextField txtGmail;
+    private TableColumn<Cita, String> ColdMascota;
 
     @FXML
-    private TextField txtNombre;
+    private TableColumn<Cita, String> ColdVeterinario;
 
     @FXML
-    private TableColumn<Propietario, String> ColEspecie;
+    private TableColumn<Cita, String> ColdPersonalApoyo;
 
     @FXML
-    private TextField txtTelefono;
+    private TableColumn<Cita, String> ColdFecha;
 
     @FXML
-    private TableColumn<Propietario, String> ColCedula;
+    private TableColumn<Cita, String> ColdObservaciones;
 
-    @FXML
-    private TableColumn<Propietario, String> ColGmail;
+    private ObservableList<Cita> listaCitas;
+    private CitaController citaController;
 
-    @FXML
-    private TableColumn<Propietario, String> ColEdad;
-
-    @FXML
-    private TableColumn<Propietario, String> ColNombrePropietario;
-
-    @FXML
-    private TableColumn<Propietario, String> ColDireccion;
-
-    @FXML
-    private TableColumn<Propietario, String> ColIdentificacion;
-
-
-    @FXML
-    void eliminarPropietario() {
-        eliminarCliente();
+    public CitaViewController() {
+        this.citaController = new CitaController(new Veterinaria("Mi Vet")); // ⚡ ojo: aquí luego inyectamos tu instancia real
+        this.listaCitas = FXCollections.observableArrayList();
     }
 
     @FXML
-    void actualizarPropietario() {
-        actualizarCliente();
-    }
+    public void initialize() {
+        // Inicializar ComboBox con datos del modelo
+        ComPropietario.setItems(FXCollections.observableArrayList(citaController.obtenerPropietarios()));
+        ComVeterinario.setItems(FXCollections.observableArrayList(citaController.obtenerVeterinarios()));
+        ComPersonalApoyo.setItems(FXCollections.observableArrayList(citaController.obtenerPersonalApoyo()));
 
-    @FXML
-    void initialize(){
-        clienteController = new ClienteController(app.veterinaria);
-        initView();
-    }
-
-    private void initView() {
-        initComboBox();
-        initDataBinding();
-        obtenerPropietarios();
-        tblListCliente.setItems(listaPropietarios);
-        obtenerMascotas();
-        listenerSelection();
-    }
-
-
-    private void initDataBinding() {
-        ColNombrePropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-        ColCedula.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-        ColDireccion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDireccion()));
-        ColTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
-        ColGmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGmail()));
-
-        ColNombreMascota.setCellValueFactory(cellData -> {
-            if (!cellData.getValue().getMascotas().isEmpty()) {
-                return new SimpleStringProperty(cellData.getValue().getMascotas().get(0).getNombreMascota());
-            }
-            return new SimpleStringProperty("");
-        });
-
-        ColEspecie.setCellValueFactory(cellData -> {
-            if (!cellData.getValue().getMascotas().isEmpty()) {
-                return new SimpleStringProperty(cellData.getValue().getMascotas().get(0).getEspecie().toString());
-            }
-            return new SimpleStringProperty("");
-        });
-
-        ColEdad.setCellValueFactory(cellData -> {
-            if (!cellData.getValue().getMascotas().isEmpty()) {
-                return new SimpleStringProperty(String.valueOf(cellData.getValue().getMascotas().get(0).getEdad()));
-            }
-            return new SimpleStringProperty("");
-        });
-
-        ColIdentificacion.setCellValueFactory(cellData -> {
-            if (!cellData.getValue().getMascotas().isEmpty()) {
-                return new SimpleStringProperty(cellData.getValue().getMascotas().get(0).getIdVeterinaria());
-            }
-            return new SimpleStringProperty("");
-        });
-    }
-
-    private void obtenerPropietarios() {
-        listaPropietarios.addAll(clienteController.obtenerPropietarios());
-    }
-
-    private void obtenerMascotas(){
-        listaMascotas.addAll(clienteController.obtenerMascotas());
-    }
-
-    private void mostrarInformacionCliente(Propietario propietario) {
-        if (propietario != null) {
-            txtNombre.setText(propietario.getNombre());
-            txtCedula.setText(propietario.getId());
-            txtDireccion.setText(propietario.getDireccion());
-            txtTelefono.setText(propietario.getTelefono());
-            txtGmail.setText(propietario.getGmail());
-        }
-    }
-
-    private void mostrarInformacionMascota(Mascota mascota){
-        if(mascota != null){
-            txtNombreMascota.setText(mascota.getNombreMascota());
-            selectedBoxEspecie.getSelectionModel().select(mascota.getEspecie());
-            txtEdad.setText(String.valueOf(mascota.getEdad()));
-            txtIdentificacion.setText(mascota.getIdVeterinaria());
-        }
-    }
-
-    private void listenerSelection() {
-        tblListCliente.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            selectedPropietario = newSelection;
-            if (selectedPropietario != null) {
-                mostrarInformacionCliente(selectedPropietario);
-                if (!selectedPropietario.getMascotas().isEmpty()) {
-                    mostrarInformacionMascota(selectedPropietario.getMascotas().get(0));
-                } else {
-                    // Limpia los campos de mascota si no tiene mascotas
-                    txtNombreMascota.clear();
-                    selectedBoxEspecie.getSelectionModel().clearSelection();
-                    txtEdad.clear();
-                    txtIdentificacion.clear();
-                }
+        // Cuando se selecciona un propietario, cargar sus mascotas
+        ComPropietario.setOnAction(event -> {
+            Propietario propietario = ComPropietario.getValue();
+            if (propietario != null) {
+                ComMascota.setItems(FXCollections.observableArrayList(propietario.getMascotas()));
             } else {
-                limpiarCamposCliente();
+                ComMascota.getItems().clear();
+            }
+        });
+
+        // Configurar columnas de la tabla
+        ColdIdentificacion.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getId()));
+
+        ColdPropietarios.setCellValueFactory(cell ->
+                new SimpleStringProperty(
+                        cell.getValue().getPropietarios().isEmpty() ? "" : cell.getValue().getPropietarios().get(0).getNombre()
+                )
+        );
+
+        ColdMascota.setCellValueFactory(cell ->
+                new SimpleStringProperty(
+                        cell.getValue().getMascotas().isEmpty() ? "" : cell.getValue().getMascotas().get(0).getNombre()
+                )
+        );
+
+        ColdVeterinario.setCellValueFactory(cell ->
+                new SimpleStringProperty(
+                        cell.getValue().getVeterinarios().isEmpty() ? "" : cell.getValue().getVeterinarios().get(0).getNombre()
+                )
+        );
+
+        ColdPersonalApoyo.setCellValueFactory(cell ->
+                new SimpleStringProperty(
+                        cell.getValue().getPersonalApoyo().isEmpty() ? "" : cell.getValue().getPersonalApoyo().get(0).getNombre()
+                )
+        );
+
+        ColdFecha.setCellValueFactory(cell ->
+                new SimpleStringProperty(cell.getValue().getFecha().toLocalDate().toString())
+        );
+
+        ColdObservaciones.setCellValueFactory(cell ->
+                new SimpleStringProperty(cell.getValue().getDescripcion())
+        );
+
+        tblCitas.setItems(listaCitas);
+
+        // Selección en tabla → mostrar datos en formulario
+        tblCitas.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null) {
+                txtIdCita.setText(newSel.getId());
+                LocalDateFecha.setValue(newSel.getFecha().toLocalDate());
+                txtObservacione.setText(newSel.getDescripcion());
+
+                if (!newSel.getPropietarios().isEmpty())
+                    ComPropietario.setValue(newSel.getPropietarios().get(0));
+
+                if (!newSel.getMascotas().isEmpty())
+                    ComMascota.setValue(newSel.getMascotas().get(0));
+
+                if (!newSel.getVeterinarios().isEmpty())
+                    ComVeterinario.setValue(newSel.getVeterinarios().get(0));
+
+                if (!newSel.getPersonalApoyo().isEmpty())
+                    ComPersonalApoyo.setValue(newSel.getPersonalApoyo().get(0));
             }
         });
     }
 
+    @FXML
+    void AgregarCita() {
+        try {
+            String id = txtIdCita.getText();
+            LocalDate fecha = LocalDateFecha.getValue();
+            String descripcion = txtObservacione.getText();
 
-    private Propietario buildPropietario() {
-        return new Propietario(
-                txtNombre.getText(),
-                txtCedula.getText(),
-                txtDireccion.getText(),
-                txtTelefono.getText(),
-                txtGmail.getText());
+            if (id.isEmpty() || fecha == null || ComPropietario.getValue() == null ||
+                    ComMascota.getValue() == null || ComVeterinario.getValue() == null ||
+                    ComPersonalApoyo.getValue() == null) {
+                mostrarAlerta("Error", "Debes llenar todos los campos");
+                return;
+            }
+
+            // Crear la cita
+            Cita cita = new Cita(id, fecha.atStartOfDay(), descripcion);
+
+            // Agregar solo UN propietario, mascota, veterinario y personal apoyo
+            cita.agregarPropietario(ComPropietario.getValue());
+            cita.agregarMascota(ComMascota.getValue());
+            cita.agregarVeterinario(ComVeterinario.getValue());
+            cita.agregarPersonalApoyo(ComPersonalApoyo.getValue());
+
+            // Guardar en el controlador
+            citaController.agregarCita(cita);
+            listaCitas.add(cita);
+            limpiarCampos();
+
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Ocurrió un problema: " + e.getMessage());
+        }
     }
-
-    private Mascota buildMascota(Propietario propietario) {
-        return new Mascota(
-                txtNombreMascota.getText(),
-                selectedBoxEspecie.getValue(),
-                propietario,
-                Integer.parseInt(txtEdad.getText()),
-                txtIdentificacion.getText());
-    }
-
-    private void limpiarCamposCliente() {
-        txtNombre.clear();
-        txtCedula.clear();
-        txtDireccion.clear();
-        txtTelefono.clear();
-        txtGmail.clear();
-        txtNombreMascota.clear();
-        txtEdad.clear();
-        txtIdentificacion.clear();
-        selectedBoxEspecie.getSelectionModel().clearSelection();
-    }
-
-    private void limpiarSelection(){
-        tblListCliente.getSelectionModel().clearSelection();
-        limpiarCamposCliente();
-    }
-
-
-
 
     @FXML
-    void crearPropietario(ActionEvent event) {
-        agregarCliente();
+    void limpiarCampos() {
+        txtIdCita.clear();
+        LocalDateFecha.setValue(null);
+        txtObservacione.clear();
+        ComPropietario.setValue(null);
+        ComMascota.getItems().clear();
+        ComVeterinario.setValue(null);
+        ComPersonalApoyo.setValue(null);
     }
 
-
-
-    private void initComboBox() {
-        selectedBoxEspecie.setItems(FXCollections.observableArrayList(Especie.values()));
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
-
-
-
-
-
-    private void agregarCliente() {
-        Propietario propietario = buildPropietario();
-        Mascota mascota = buildMascota(propietario);
-        propietario.getMascotas().add(mascota);
-
-        if (clienteController.crearPropietario(propietario, mascota)) {
-            listaPropietarios.add(propietario);
-            limpiarCamposCliente();
-        }
-    }
-
-    private void eliminarCliente(){
-        if(clienteController.eliminarPropietario(txtCedula.getText())){
-            listaPropietarios.remove(selectedPropietario);
-            limpiarCamposCliente();
-
-        }
-    }
-
-    private void actualizarCliente(){
-        if(selectedPropietario != null && clienteController.actualiazarPropietario(selectedPropietario.getId(), buildPropietario())){
-            int index = listaPropietarios.indexOf(selectedPropietario);
-            if(index >=0) {
-                listaPropietarios.set(index, buildPropietario());
-            }
-            tblListCliente.refresh();
-            limpiarSelection();
-            limpiarCamposCliente();
-        }
-    }
-
-
-
-
-
-
 }
