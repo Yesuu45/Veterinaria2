@@ -26,7 +26,7 @@ public class App extends Application {
             new Veterinaria("Canino", "cr40-42-16", "21212121", "232323");
 
     /**
-     * Punto de entrada JavaFX.
+     * Punto de entrada JavaFX...
      */
     @Override
     public void start(Stage primaryStage) {
