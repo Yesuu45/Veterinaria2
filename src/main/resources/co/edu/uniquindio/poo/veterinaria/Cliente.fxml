@@ -1,91 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
+<AnchorPane prefHeight="500.0" prefWidth="800.0"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.ClienteViewController">
 
     <children>
-        <Pane layoutX="14.0" layoutY="5.0" prefHeight="807.0" prefWidth="998.0"
-              style="-fx-background-color: #E6F3FF;">
-            <children>
-                <!-- Botones -->
-                <Button fx:id="btbAgregarCliente" layoutX="400.0" layoutY="254.0" mnemonicParsing="false"
-                        onAction="#crearPropietario" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
-                        text="Agregar">
-                    <font>
-                        <Font name="System Bold" size="14.0"/>
-                    </font>
-                </Button>
+        <ScrollPane fitToWidth="true" fitToHeight="true"
+                    AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0"
+                    AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
+            <content>
+                <VBox spacing="10" fillWidth="true">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
 
-                <Button fx:id="btnActualizarCliente" layoutX="500.0" layoutY="254.0" mnemonicParsing="false"
-                        onAction="#actualizarPropietario" style="-fx-background-color: #2196F3; -fx-text-fill: white;"
-                        text="Actualizar">
-                    <font>
-                        <Font name="System Bold" size="14.0"/>
-                    </font>
-                </Button>
+                    <Label text="Clientes"
+                           style="-fx-font-size:18px; -fx-font-weight:bold;"/>
 
-                <Button fx:id="btnEliminarCliente" layoutX="610.0" layoutY="254.0" mnemonicParsing="false"
-                        onAction="#eliminarPropietario" style="-fx-background-color: #f44336; -fx-text-fill: white;"
-                        text="Eliminar">
-                    <font>
-                        <Font name="System Bold" size="14.0"/>
-                    </font>
-                </Button>
+                    <HBox spacing="12">
+                        <!-- Form Propietario -->
+                        <VBox spacing="8" prefWidth="280"
+                              style="-fx-padding:10; -fx-background-color:#f8f9fa; -fx-background-radius:10;">
+                            <Label text="Propietario" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
+                            <TextField fx:id="txtNombre"     promptText="Nombre"/>
+                            <TextField fx:id="txtId"         promptText="Documento"/>
+                            <TextField fx:id="txtDireccion"  promptText="Dirección"/>
+                            <TextField fx:id="txtTelefono"   promptText="Teléfono"/>
+                            <TextField fx:id="txtGmail"      promptText="Correo"/>
 
-                <!-- Campos Propietario -->
-                <Text layoutX="304.0" layoutY="66.0" text="Propietario">
-                    <font>
-                        <Font name="System Bold" size="18.0"/>
-                    </font>
-                </Text>
-                <TextField fx:id="txtNombre" layoutX="261.0" layoutY="83.0" promptText="Nombre"/>
-                <TextField fx:id="txtCedula" layoutX="261.0" layoutY="116.0" promptText="Cedula"/>
-                <TextField fx:id="txtDireccion" layoutX="261.0" layoutY="149.0" promptText="Direccion"/>
-                <TextField fx:id="txtTelefono" layoutX="261.0" layoutY="183.0" promptText="Telefono"/>
-                <TextField fx:id="txtGmail" layoutX="261.0" layoutY="215.0" promptText="Gmail"/>
+                            <HBox spacing="6">
+                                <Button text="Guardar"   onAction="#onGuardar"
+                                        style="-fx-background-color:#28a745; -fx-text-fill:white; -fx-font-weight:bold;"/>
+                                <Button text="Actualizar" onAction="#onActualizar"
+                                        style="-fx-background-color:#2196F3; -fx-text-fill:white;"/>
+                            </HBox>
+                            <HBox spacing="6">
+                                <Button text="Eliminar"  onAction="#onEliminar"
+                                        style="-fx-background-color:#f44336; -fx-text-fill:white;"/>
+                                <Button text="Limpiar"   onAction="#onLimpiar"
+                                        style="-fx-background-color:#ffc107;"/>
+                            </HBox>
 
-                <!-- Campos Mascota -->
-                <Text layoutX="577.0" layoutY="66.0" text="Mascota">
-                    <font>
-                        <Font name="System Bold" size="18.0"/>
-                    </font>
-                </Text>
-                <TextField fx:id="txtNombreMascota" layoutX="534.0" layoutY="83.0" promptText="Nombre"/>
-                <ComboBox fx:id="selectedBoxEspecie" layoutX="533.0" layoutY="117.0" prefWidth="150.0" promptText="Especie"/>
-                <TextField fx:id="txtEdad" layoutX="534.0" layoutY="149.0" promptText="Edad"/>
-                <TextField fx:id="txtIdentificacion" layoutX="534.0" layoutY="183.0" promptText="Identificacion"/>
+                            <!-- Form Mascota -->
+                            <Separator/>
+                            <Label text="Mascota del propietario seleccionado" style="-fx-font-weight:bold;"/>
+                            <TextField fx:id="txtMascotaNombre" promptText="Nombre de la mascota"/>
+                            <ComboBox fx:id="cmbMascotaEspecie" promptText="Especie"/>
+                            <TextField fx:id="txtMascotaRaza"   promptText="Raza"/>
+                            <TextField fx:id="txtMascotaEdad"   promptText="Edad (número)"/>
+                            <TextField fx:id="txtMascotaIdVet"  promptText="ID veterinaria (único)"/>
 
-                <!-- Tabla de Clientes y Mascotas -->
-                <TableView fx:id="tblListCliente" layoutX="52.0" layoutY="296.0" prefHeight="434.0" prefWidth="909.0">
-                    <columns>
-                        <TableColumn fx:id="ColNombrePropietario" prefWidth="167.0" text="Nombre Propietario"/>
-                        <TableColumn fx:id="ColCedula" prefWidth="88.0" text="Cedula"/>
-                        <TableColumn fx:id="ColDireccion" prefWidth="94.0" text="Direccion"/>
-                        <TableColumn fx:id="ColTelefono" prefWidth="89.0" text="Telefono"/>
-                        <TableColumn fx:id="ColGmail" prefWidth="91.0" text="Gmail"/>
-                        <TableColumn fx:id="ColNombreMascota" prefWidth="116.0" text="Nombre Mascota"/>
-                        <TableColumn fx:id="ColEspecie" prefWidth="73.0" text="Especie"/>
-                        <TableColumn fx:id="ColEdad" prefWidth="72.0" text="Edad"/>
-                        <TableColumn fx:id="ColIdentificacion" prefWidth="118.0" text="Identificacion"/>
-                    </columns>
-                </TableView>
+                            <HBox spacing="6">
+                                <Button text="Agregar Mascota" onAction="#onAgregarMascota"
+                                        style="-fx-background-color:#6f42c1; -fx-text-fill:white; -fx-font-weight:bold;"/>
+                                <Button text="Actualizar Mascota" onAction="#onActualizarMascota"
+                                        style="-fx-background-color:#17a2b8; -fx-text-fill:white;"/>
+                            </HBox>
+                            <Button text="Eliminar Mascota" onAction="#onEliminarMascota"
+                                    style="-fx-background-color:#dc3545; -fx-text-fill:white;"/>
+                        </VBox>
 
-                <!-- Título -->
-                <Text fill="#1e56a3" layoutX="349.0" layoutY="31.0" text="REGISTRO VETERINARIA">
-                    <font>
-                        <Font name="System Bold" size="24.0"/>
-                    </font>
-                </Text>
-            </children>
-        </Pane>
+                        <!-- Tablas -->
+                        <VBox spacing="8" VBox.vgrow="ALWAYS">
+                            <Label text="Propietarios" style="-fx-font-weight:bold;"/>
+
+                            <TableView fx:id="tblPropietarios" prefHeight="190" maxHeight="200">
+                                <columns>
+                                    <TableColumn fx:id="colNombre"    text="Nombre"     prefWidth="150"/>
+                                    <TableColumn fx:id="colId"        text="Documento"  prefWidth="110"/>
+                                    <TableColumn fx:id="colTelefono"  text="Teléfono"   prefWidth="100"/>
+                                    <TableColumn fx:id="colDireccion" text="Dirección"  prefWidth="160"/>
+                                    <TableColumn fx:id="colGmail"     text="Correo"     prefWidth="160"/>
+                                </columns>
+                            </TableView>
+
+                            <Label text="Mascotas del propietario (selecciona una para editar/eliminar)"
+                                   style="-fx-font-weight:bold;"/>
+
+                            <TableView fx:id="tblMascotas" prefHeight="160" maxHeight="180" VBox.vgrow="NEVER">
+                                <columns>
+                                    <TableColumn fx:id="colMascotaNombre" text="Nombre"   prefWidth="140"/>
+                                    <TableColumn fx:id="colMascotaEspecie" text="Especie"  prefWidth="90"/>
+                                    <TableColumn fx:id="colMascotaRaza"    text="Raza"     prefWidth="120"/>
+                                    <TableColumn fx:id="colMascotaEdad"    text="Edad"     prefWidth="70"/>
+                                    <TableColumn fx:id="colMascotaIdVet"   text="ID Vet"   prefWidth="120"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
     </children>
 </AnchorPane>

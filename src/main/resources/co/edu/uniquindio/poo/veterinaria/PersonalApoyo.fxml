@@ -1,72 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/8"
+<ScrollPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PersonalApoyoViewController">
+            fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PersonalApoyoViewController"
+            fitToWidth="true" fitToHeight="true"
+            hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"
+            pannable="true"
+            prefWidth="1000.0" prefHeight="650.0">
 
-    <children>
-        <Pane layoutY="-10.0" prefHeight="710.0" prefWidth="1249.0" style="-fx-background-color: #F5FBFF;">
-            <children>
-                <Text fill="#2C5F2D" layoutX="400.0" layoutY="50.0"
-                      style="-fx-font-weight: bold;" text="👥 Registro de Personal de Apoyo">
-                    <font>
-                        <Font size="30.0"/>
-                    </font>
-                </Text>
-
-                <HBox layoutX="80.0" layoutY="80.0" spacing="30">
+    <content>
+        <BorderPane style="-fx-background-color:#F5FBFF;">
+            <!-- Título -->
+            <top>
+                <HBox alignment="CENTER" style="-fx-padding: 20 20 0 20;">
                     <children>
-                        <VBox spacing="15"
-                              style="-fx-background-color: #FFFFFF; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, #999999, 10, 0, 4, 4);">
+                        <Text text="👥 Registro de Personal de Apoyo" fill="#2C5F2D" style="-fx-font-weight:bold;">
+                            <font><Font size="26.0"/></font>
+                        </Text>
+                    </children>
+                </HBox>
+            </top>
+
+            <!-- Cuerpo -->
+            <center>
+                <HBox spacing="20" style="-fx-padding: 20;">
+                    <children>
+
+                        <!-- Formulario (ancho fijo) -->
+                        <VBox spacing="12" prefWidth="360"
+                              style="-fx-background-color:#FFFFFF; -fx-padding:20; -fx-background-radius:15; -fx-effect:dropshadow(gaussian,#999,10,0,4,4);">
                             <children>
-                                <Text fill="#2C5F2D" text="Datos del Personal de Apoyo">
-                                    <font>
-                                        <Font size="20.0"/>
-                                    </font>
+                                <Text text="Datos del Personal" fill="#2C5F2D">
+                                    <font><Font size="18.0"/></font>
                                 </Text>
 
-                                <TextField fx:id="txtNombre" promptText="Nombre completo" style="-fx-background-radius: 10;"/>
-                                <TextField fx:id="txtId" promptText="Identificación" style="-fx-background-radius: 10;"/>
-                                <TextField fx:id="txtDireccion" promptText="Dirección" style="-fx-background-radius: 10;"/>
-                                <TextField fx:id="txtTelefono" promptText="Teléfono" style="-fx-background-radius: 10;"/>
-                                <TextField fx:id="txtGmail" promptText="Correo electrónico" style="-fx-background-radius: 10;"/>
+                                <TextField fx:id="txtNombre"    promptText="Nombre completo"/>
+                                <TextField fx:id="txtId"        promptText="Identificación"/>
+                                <TextField fx:id="txtDireccion" promptText="Dirección"/>
+                                <TextField fx:id="txtTelefono"  promptText="Teléfono"/>
+                                <TextField fx:id="txtGmail"     promptText="Correo electrónico"/>
+                                <!-- Si manejas 'cargo' en el modelo y controlador, añade: -->
+                                <!-- <TextField fx:id="txtCargo"     promptText="Cargo"/> -->
 
-                                <HBox spacing="10">
-                                    <children>
-                                        <Button fx:id="buttonAgregar" mnemonicParsing="false" onAction="#agregarPersonalApoyo"
-                                                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10;"
-                                                text="➕ Agregar"/>
-                                        <Button mnemonicParsing="false" onAction="#onEliminar"
-                                                style="-fx-background-color:#f44336; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius: 10; -fx-padding: 10;"
-                                                text="🗑 Eliminar"/>
-                                        <Button mnemonicParsing="false" onAction="#onActualizar"
-                                                style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius: 10; -fx-padding: 10;"
-                                                text="✏ Actualizar"/>
-                                    </children>
+                                <HBox spacing="8">
+                                    <Button text="➕ Agregar"  onAction="#onAgregar"
+                                            style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:10; -fx-padding:8;"/>
+                                    <Button text="✏ Actualizar" onAction="#onActualizar"
+                                            style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:10; -fx-padding:8;"/>
+                                    <Button text="🗑 Eliminar" onAction="#onEliminar"
+                                            style="-fx-background-color:#f44336; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:10; -fx-padding:8;"/>
                                 </HBox>
                             </children>
                         </VBox>
 
-                        <TableView fx:id="tblPersonalApoyo" prefHeight="500.0" prefWidth="800.0"
-                                   style="-fx-background-radius: 10; -fx-border-color: #CCCCCC; -fx-border-radius: 10;">
+                        <!-- Tabla (se estira) -->
+                        <TableView fx:id="tblPersonalApoyo"
+                                   HBox.hgrow="ALWAYS"
+                                   minWidth="500.0" minHeight="300.0"
+                                   style="-fx-background-radius:10; -fx-border-color:#CCC; -fx-border-radius:10;">
                             <columns>
-                                <TableColumn fx:id="colNombre" prefWidth="150.0" text="Nombre"/>
-                                <TableColumn fx:id="colId" prefWidth="120.0" text="Identificación"/>
-                                <TableColumn fx:id="colDireccion" prefWidth="200.0" text="Dirección"/>
-                                <TableColumn fx:id="colTelefono" prefWidth="150.0" text="Teléfono"/>
-                                <TableColumn fx:id="colGmail" prefWidth="180.0" text="Correo"/>
+                                <TableColumn fx:id="colNombre"    text="Nombre"        prefWidth="160.0" minWidth="140.0"/>
+                                <TableColumn fx:id="colId"        text="Identificación" prefWidth="140.0" minWidth="120.0"/>
+                                <TableColumn fx:id="colDireccion" text="Dirección"      prefWidth="200.0" minWidth="160.0"/>
+                                <TableColumn fx:id="colTelefono"  text="Teléfono"       prefWidth="140.0" minWidth="120.0"/>
+                                <TableColumn fx:id="colGmail"     text="Correo"         prefWidth="200.0" minWidth="160.0"/>
+                                <!-- Si usas cargo:
+                                <TableColumn fx:id="colCargo"     text="Cargo"           prefWidth="140.0" minWidth="120.0"/>
+                                -->
                             </columns>
                         </TableView>
+
                     </children>
                 </HBox>
-            </children>
-        </Pane>
-    </children>
-</AnchorPane>
+            </center>
+        </BorderPane>
+    </content>
+</ScrollPane>
