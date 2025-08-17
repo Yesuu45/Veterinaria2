@@ -1,8 +1,8 @@
 package co.edu.uniquindio.poo.veterinaria.model;
 
 public enum Especialidad {
-    ANIMALESPEQUEÑOS,
+    ANIMALES_PEQUENOS,
     EXOTICOS,
     ACUATICOS,
-    HERVIROS
+    HERBIVOROS
 }

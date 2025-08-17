@@ -5,9 +5,7 @@
 
 <TabPane fx:id="maiTabPane"
          fx:controller="co.edu.uniquindio.poo.veterinaria.viewController.PrincipalViewController"
-         maxHeight="-Infinity" maxWidth="-Infinity"
-         minHeight="-Infinity" minWidth="-Infinity"
-         prefHeight="848.0" prefWidth="1426.0"
+         prefHeight="700.0" prefWidth="1100.0"
          tabClosingPolicy="UNAVAILABLE"
          xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1">
@@ -19,7 +17,11 @@
             <content>
                 <AnchorPane>
                     <children>
-                        <fx:include fx:id="clientesInclude" source="Cliente.fxml"/>
+                        <fx:include fx:id="clientesInclude" source="Cliente.fxml"
+                                    AnchorPane.topAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.leftAnchor="0.0"/>
                     </children>
                 </AnchorPane>
             </content>
@@ -30,7 +32,11 @@
             <content>
                 <AnchorPane>
                     <children>
-                        <fx:include fx:id="veterinarioInclude" source="Veterinario.fxml"/>
+                        <fx:include fx:id="veterinarioInclude" source="Veterinario.fxml"
+                                    AnchorPane.topAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.leftAnchor="0.0"/>
                     </children>
                 </AnchorPane>
             </content>
@@ -41,7 +47,11 @@
             <content>
                 <AnchorPane>
                     <children>
-                        <fx:include fx:id="personalApoyoInclude" source="PersonalApoyo.fxml"/>
+                        <fx:include fx:id="personalApoyoInclude" source="PersonalApoyo.fxml"
+                                    AnchorPane.topAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.leftAnchor="0.0"/>
                     </children>
                 </AnchorPane>
             </content>
@@ -52,7 +62,11 @@
             <content>
                 <AnchorPane>
                     <children>
-                        <fx:include fx:id="citasInclude" source="Citas.fxml"/>
+                        <fx:include fx:id="citasInclude" source="Cita.fxml"
+                                    AnchorPane.topAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.leftAnchor="0.0"/>
                     </children>
                 </AnchorPane>
             </content>
@@ -63,7 +77,11 @@
             <content>
                 <AnchorPane>
                     <children>
-                        <fx:include fx:id="consultaInclude" source="Consulta.fxml"/>
+                        <fx:include fx:id="consultaInclude" source="Consulta.fxml"
+                                    AnchorPane.topAnchor="0.0"
+                                    AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.leftAnchor="0.0"/>
                     </children>
                 </AnchorPane>
             </content>

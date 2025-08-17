@@ -2,44 +2,56 @@ package co.edu.uniquindio.poo.veterinaria.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.NonNull;
 
-/**
- * La clase Tratamiento representa la terapia, medicamento o procedimiento
- * recomendado/aplicado a una mascota en una consulta veterinaria.
- */
 @Getter
 @Setter
+
 public class Tratamiento {
 
-    @NonNull
-    private String nombre;   // Nombre del tratamiento (ej: Vacuna, Desparasitación)
+    /** Nombre del medicamento (ej: "Amoxicilina"). */
+    private String medicamento;
 
-    private String descripcion;  // Detalle del tratamiento
+    /** Dosis del medicamento (ej: "250 mg"). */
+    private String dosis;
 
-    private String dosis;   // Dosis y frecuencia (ej: 5ml cada 12h)
+    /** Frecuencia de administración (ej: "cada 12 horas"). */
+    private String frecuencia;
 
-    private int duracionDias; // Duración en días del tratamiento
+    /** Duración en días (>=0). */
+    private int dias;
 
+    /** Indicaciones adicionales (ej: "con comida"). */
+    private String indicaciones;
 
-    // Constructor
-    public Tratamiento(@NonNull String nombre,
-                       String descripcion,
-                       String dosis,
-                       int duracionDias) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+    /**
+     * Crea un tratamiento con sus datos principales.
+     * @param medicamento medicamento recetado
+     * @param dosis dosis indicada
+     * @param frecuencia frecuencia de administración
+     * @param dias duración en días (se corrige a 0 si es negativo)
+     * @param indicaciones notas adicionales
+     * SOLID: SRP.
+     */
+    public Tratamiento(String medicamento, String dosis, String frecuencia, int dias, String indicaciones) {
+        this.medicamento = medicamento;
         this.dosis = dosis;
-        this.duracionDias = duracionDias;
+        this.frecuencia = frecuencia;
+        this.dias = Math.max(0, dias);
+        this.indicaciones = indicaciones;
     }
 
+    /**
+     * Representación legible del tratamiento: medicamento, dosis, frecuencia, días e indicaciones.
+     * SOLID: SRP.
+     */
     @Override
     public String toString() {
-        return "Tratamiento{" +
-                "nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", dosis='" + dosis + '\'' +
-                ", duracionDias=" + duracionDias +
-                '}';
+        String base = (medicamento != null ? medicamento : "Tratamiento")
+                + (dosis != null ? " " + dosis : "")
+                + (frecuencia != null ? " • " + frecuencia : "")
+                + (dias > 0 ? " • " + dias + " días" : "");
+        return (indicaciones != null && !indicaciones.isBlank())
+                ? base + " — " + indicaciones
+                : base;
     }
 }
